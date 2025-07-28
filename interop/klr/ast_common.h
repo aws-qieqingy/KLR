@@ -11,32 +11,38 @@ Authors: Paul Govereau, Sean McLaughlin
 #include "stdc.h"
 #include "region.h"
 
+
 // KLR Common Abstract Syntax
 
 struct Bool_List {
-  struct Bool_List *next;
+  struct Bool_List* next;
   bool b;
 };
 
 struct Nat_List {
-  struct Nat_List *next;
+  struct Nat_List* next;
   u32 nat;
 };
 
 struct Int_List {
-  struct Int_List *next;
+  struct Int_List* next;
   i32 i;
 };
 
 struct Float_List {
-  struct Float_List *next;
+  struct Float_List* next;
   f32 f;
 };
 
 struct String_List {
-  struct String_List *next;
-  char *s;
+  struct String_List* next;
+  char* s;
 };
+
+
+
+
+
 
 struct Core_Pos {
   u32 line;

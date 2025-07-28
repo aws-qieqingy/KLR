@@ -12,26 +12,26 @@ Authors: Paul Govereau, Sean McLaughlin
 #include "region.h"
 #include "ast_common.h"
 
-bool Bool_List_ser(FILE *out, struct Bool_List *x);
-bool Nat_List_ser(FILE *out, struct Nat_List *x);
-bool Int_List_ser(FILE *out, struct Int_List *x);
-bool Float_List_ser(FILE *out, struct Float_List *x);
-bool String_List_ser(FILE *out, struct String_List *x);
+bool Bool_List_ser(FILE *out, struct Bool_List* x);
+bool Nat_List_ser(FILE *out, struct Nat_List* x);
+bool Int_List_ser(FILE *out, struct Int_List* x);
+bool Float_List_ser(FILE *out, struct Float_List* x);
+bool String_List_ser(FILE *out, struct String_List* x);
 bool Bool_Option_ser(FILE *out, bool x);
 bool Nat_Option_ser(FILE *out, u32 x);
 bool Int_Option_ser(FILE *out, i32 x);
 bool Float_Option_ser(FILE *out, f32 x);
-bool String_Option_ser(FILE *out, char *x);
-bool Core_Pos_ser(FILE *out, struct Core_Pos *x);
+bool String_Option_ser(FILE *out, char* x);
+bool Core_Pos_ser(FILE *out, struct Core_Pos* x);
 
-bool Bool_List_des(FILE *in, struct region *region, struct Bool_List **x);
-bool Nat_List_des(FILE *in, struct region *region, struct Nat_List **x);
-bool Int_List_des(FILE *in, struct region *region, struct Int_List **x);
-bool Float_List_des(FILE *in, struct region *region, struct Float_List **x);
-bool String_List_des(FILE *in, struct region *region, struct String_List **x);
-bool Bool_Option_des(FILE *in, struct region *region, bool *x);
-bool Nat_Option_des(FILE *in, struct region *region, u32 *x);
-bool Int_Option_des(FILE *in, struct region *region, i32 *x);
-bool Float_Option_des(FILE *in, struct region *region, f32 *x);
-bool String_Option_des(FILE *in, struct region *region, char **x);
-bool Core_Pos_des(FILE *in, struct region *region, struct Core_Pos **x);
+bool Bool_List_des(FILE *in, struct region *region, struct Bool_List** x);
+bool Nat_List_des(FILE *in, struct region *region, struct Nat_List** x);
+bool Int_List_des(FILE *in, struct region *region, struct Int_List** x);
+bool Float_List_des(FILE *in, struct region *region, struct Float_List** x);
+bool String_List_des(FILE *in, struct region *region, struct String_List** x);
+bool Bool_Option_des(FILE *in, struct region *region, bool* x);
+bool Nat_Option_des(FILE *in, struct region *region, u32* x);
+bool Int_Option_des(FILE *in, struct region *region, i32* x);
+bool Float_Option_des(FILE *in, struct region *region, f32* x);
+bool String_Option_des(FILE *in, struct region *region, char** x);
+bool Core_Pos_des(FILE *in, struct region *region, struct Core_Pos** x);

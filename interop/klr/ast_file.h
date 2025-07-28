@@ -24,33 +24,33 @@ struct Serde_KLRFile {
 };
 
 struct Serde_KLRMetaData {
-  char *format;
+  char* format;
 };
 
 enum File_Contents_Tag {
-  File_Contents_python = 1,
-  File_Contents_nki,
-  File_Contents_klir,
-  File_Contents_hlo,
+File_Contents_python = 1,
+File_Contents_nki,
+File_Contents_klir,
+File_Contents_hlo,
 };
 struct File_Contents_python {
-  struct Python_Kernel *kernel;
+  struct Python_Kernel* kernel;
 };
 struct File_Contents_nki {
-  struct NKI_Kernel *kernel;
+  struct NKI_Kernel* kernel;
 };
 struct File_Contents_klir {
-  struct Core_Kernel *kernel;
+  struct Core_Kernel* kernel;
 };
 struct File_Contents_hlo {
-  char *name;
+  char* name;
 };
 struct File_Contents {
-  enum File_Contents_Tag tag;
-  union {
-    struct File_Contents_python python;
-    struct File_Contents_nki nki;
-    struct File_Contents_klir klir;
-    struct File_Contents_hlo hlo;
-  };
+enum File_Contents_Tag tag;
+union {
+struct File_Contents_python python;
+struct File_Contents_nki nki;
+struct File_Contents_klir klir;
+struct File_Contents_hlo hlo;
+};
 };

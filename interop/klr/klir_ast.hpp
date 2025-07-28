@@ -10,9 +10,20 @@ Written by the KLR Contributors (https://github.com/leanprover/KLR)
 
 #include "klir_common.hpp"
 
+
 namespace klr {
 
 // KLR.Core Abstract Syntax
+
+
+
+
+
+
+
+
+
+
 
 struct Pos final {
   Nat line;
@@ -22,28 +33,28 @@ struct Pos final {
 };
 
 enum class Memory {
-  hbm = 1,
-  sbuf,
-  pmem,
-  reg,
+hbm = 1,
+sbuf,
+pmem,
+reg,
 };
 
 enum class Dtype {
-  bfloat16 = 1,
-  float8e3,
-  float8e4,
-  float8e5,
-  float16,
-  float32,
-  float32r,
-  int8,
-  int16,
-  int64,
-  int32,
-  uint8,
-  uint16,
-  uint32,
-  uint64,
+bfloat16 = 1,
+float8e3,
+float8e4,
+float8e5,
+float16,
+float32,
+float32r,
+int8,
+int16,
+int64,
+int32,
+uint8,
+uint16,
+uint32,
+uint64,
 };
 
 struct Shape final {
@@ -77,22 +88,22 @@ struct Slice final {
 };
 
 struct Index {
-  enum class Tag {
-    coord = 1,
-    slice,
-  };
+enum class Tag {
+coord = 1,
+slice,
+};
   Tag tag;
   Index(Tag tag) : tag(tag) {}
 };
 
 struct IndexCoordWrapper final : Index {
-  Nat e;
-  IndexCoordWrapper() : Index(Tag::coord) {}
+Nat e;
+ IndexCoordWrapper() : Index(Tag::coord) {}
 };
 
 struct IndexSliceWrapper final : Index {
-  Ptr<Slice> slice;
-  IndexSliceWrapper() : Index(Tag::slice) {}
+Ptr<Slice> slice;
+ IndexSliceWrapper() : Index(Tag::slice) {}
 };
 
 struct AccessBasic final {
@@ -114,28 +125,28 @@ struct AccessPattern final {
 };
 
 struct Access {
-  enum class Tag {
-    simple = 1,
-    basic,
-    pattern,
-  };
+enum class Tag {
+simple = 1,
+basic,
+pattern,
+};
   Tag tag;
   Access(Tag tag) : tag(tag) {}
 };
 
 struct AccessSimpleWrapper final : Access {
-  Ptr<TensorName> tensor;
-  AccessSimpleWrapper() : Access(Tag::simple) {}
+Ptr<TensorName> tensor;
+ AccessSimpleWrapper() : Access(Tag::simple) {}
 };
 
 struct AccessBasicWrapper final : Access {
-  Ptr<AccessBasic> access;
-  AccessBasicWrapper() : Access(Tag::basic) {}
+Ptr<AccessBasic> access;
+ AccessBasicWrapper() : Access(Tag::basic) {}
 };
 
 struct AccessPatternWrapper final : Access {
-  Ptr<AccessPattern> access;
-  AccessPatternWrapper() : Access(Tag::pattern) {}
+Ptr<AccessPattern> access;
+ AccessPatternWrapper() : Access(Tag::pattern) {}
 };
 
 struct TensorHbm final {
@@ -146,10 +157,10 @@ struct TensorHbm final {
 };
 
 enum class ParQuadrant {
-  par0 = 1,
-  par32,
-  par64,
-  par96,
+par0 = 1,
+par32,
+par64,
+par96,
 };
 
 struct TensorSram final {
@@ -162,104 +173,180 @@ struct TensorSram final {
 };
 
 struct TensorRef {
-  enum class Tag {
-    abstract = 1,
-    sbuf,
-    psum,
-    hbm,
-    reg,
-  };
+enum class Tag {
+abstract = 1,
+sbuf,
+psum,
+hbm,
+reg,
+};
   Tag tag;
   TensorRef(Tag tag) : tag(tag) {}
 };
 
 struct TensorRefAbstractWrapper final : TensorRef {
-  Ptr<Access> access;
-  TensorRefAbstractWrapper() : TensorRef(Tag::abstract) {}
+Ptr<Access> access;
+ TensorRefAbstractWrapper() : TensorRef(Tag::abstract) {}
 };
 
 struct TensorRefSbufWrapper final : TensorRef {
-  Ptr<TensorSram> view;
-  TensorRefSbufWrapper() : TensorRef(Tag::sbuf) {}
+Ptr<TensorSram> view;
+ TensorRefSbufWrapper() : TensorRef(Tag::sbuf) {}
 };
 
 struct TensorRefPsumWrapper final : TensorRef {
-  Ptr<TensorSram> view;
-  TensorRefPsumWrapper() : TensorRef(Tag::psum) {}
+Ptr<TensorSram> view;
+ TensorRefPsumWrapper() : TensorRef(Tag::psum) {}
 };
 
 struct TensorRefHbmWrapper final : TensorRef {
-  Ptr<TensorHbm> view;
-  TensorRefHbmWrapper() : TensorRef(Tag::hbm) {}
+Ptr<TensorHbm> view;
+ TensorRefHbmWrapper() : TensorRef(Tag::hbm) {}
 };
 
 struct TensorRefRegisterWrapper final : TensorRef {
-  Nat reg;
-  TensorRefRegisterWrapper() : TensorRef(Tag::reg) {}
+Nat reg;
+ TensorRefRegisterWrapper() : TensorRef(Tag::reg) {}
 };
 
 enum class Engine {
-  unassigned = 1,
-  act,
-  dma,
-  dve,
-  pe,
-  pool,
-  sp,
+unassigned = 1,
+act,
+dma,
+dve,
+pe,
+pool,
+sp,
 };
 
 struct Immediate {
-  enum class Tag {
-    reg = 1,
-    pointer,
-    int32,
-    float32,
-  };
+enum class Tag {
+reg = 1,
+pointer,
+int32,
+float32,
+};
   Tag tag;
   Immediate(Tag tag) : tag(tag) {}
 };
 
 struct ImmediateRegisterWrapper final : Immediate {
-  Nat reg;
-  ImmediateRegisterWrapper() : Immediate(Tag::reg) {}
+Nat reg;
+ ImmediateRegisterWrapper() : Immediate(Tag::reg) {}
 };
 
 struct ImmediatePointerWrapper final : Immediate {
-  ImmediatePointerWrapper() : Immediate(Tag::pointer) {}
+ ImmediatePointerWrapper() : Immediate(Tag::pointer) {}
 };
 
 struct ImmediateIntWrapper final : Immediate {
-  Int i;
-  ImmediateIntWrapper() : Immediate(Tag::int32) {}
+Int i;
+ ImmediateIntWrapper() : Immediate(Tag::int32) {}
 };
 
 struct ImmediateFloatWrapper final : Immediate {
-  Float f;
-  ImmediateFloatWrapper() : Immediate(Tag::float32) {}
+Float f;
+ ImmediateFloatWrapper() : Immediate(Tag::float32) {}
 };
 
 struct ActivationImm {
-  enum class Tag {
-    reg = 1,
-    pointer,
-    float32,
-  };
+enum class Tag {
+reg = 1,
+pointer,
+float32,
+};
   Tag tag;
   ActivationImm(Tag tag) : tag(tag) {}
 };
 
 struct ActivationImmRegisterWrapper final : ActivationImm {
-  Nat reg;
-  ActivationImmRegisterWrapper() : ActivationImm(Tag::reg) {}
+Nat reg;
+ ActivationImmRegisterWrapper() : ActivationImm(Tag::reg) {}
 };
 
 struct ActivationImmPointerWrapper final : ActivationImm {
-  ActivationImmPointerWrapper() : ActivationImm(Tag::pointer) {}
+ ActivationImmPointerWrapper() : ActivationImm(Tag::pointer) {}
 };
 
 struct ActivationImmFloatWrapper final : ActivationImm {
-  Float f;
-  ActivationImmFloatWrapper() : ActivationImm(Tag::float32) {}
+Float f;
+ ActivationImmFloatWrapper() : ActivationImm(Tag::float32) {}
+};
+
+struct Scale {
+enum class Tag {
+imm = 1,
+tensor,
+};
+  Tag tag;
+  Scale(Tag tag) : tag(tag) {}
+};
+
+struct ScaleImmWrapper final : Scale {
+Ptr<Immediate> i;
+ ScaleImmWrapper() : Scale(Tag::imm) {}
+};
+
+struct ScaleTensorWrapper final : Scale {
+Ptr<TensorRef> t;
+ ScaleTensorWrapper() : Scale(Tag::tensor) {}
+};
+
+struct Scale {
+enum class Tag {
+imm = 1,
+tensor,
+};
+  Tag tag;
+  Scale(Tag tag) : tag(tag) {}
+};
+
+struct ScaleImmWrapper final : Scale {
+Ptr<Immediate> i;
+ ScaleImmWrapper() : Scale(Tag::imm) {}
+};
+
+struct ScaleTensorWrapper final : Scale {
+Ptr<TensorRef> t;
+ ScaleTensorWrapper() : Scale(Tag::tensor) {}
+};
+
+struct Axis {
+enum class Tag {
+ax = 1,
+axs,
+};
+  Tag tag;
+  Axis(Tag tag) : tag(tag) {}
+};
+
+struct AxisAxWrapper final : Axis {
+Int ax;
+ AxisAxWrapper() : Axis(Tag::ax) {}
+};
+
+struct AxisAxsWrapper final : Axis {
+List<Int> axs;
+ AxisAxsWrapper() : Axis(Tag::axs) {}
+};
+
+struct Operand {
+enum class Tag {
+imm = 1,
+tile,
+};
+  Tag tag;
+  Operand(Tag tag) : tag(tag) {}
+};
+
+struct OperandImmWrapper final : Operand {
+Ptr<Immediate> i;
+ OperandImmWrapper() : Operand(Tag::imm) {}
+};
+
+struct OperandTileWrapper final : Operand {
+Ptr<TensorRef> t;
+ OperandTileWrapper() : Operand(Tag::tile) {}
 };
 
 struct DataPattern final {
@@ -268,155 +355,156 @@ struct DataPattern final {
 };
 
 enum class AluOp {
-  abs = 1,
-  add,
-  arith_shift_left,
-  arith_shift_right,
-  average,
-  bitwise_and,
-  bitwise_not,
-  bitwise_or,
-  bitwise_xor,
-  bypass,
-  divide,
-  is_equal,
-  is_ge,
-  is_gt,
-  is_le,
-  is_lt,
-  logical_and,
-  logical_or,
-  logical_shift_left,
-  logical_shift_right,
-  logical_xor,
-  max,
-  min,
-  mod,
-  mult,
-  not_equal,
-  pow,
-  rsqrt,
-  subtract,
+abs = 1,
+add,
+arith_shift_left,
+arith_shift_right,
+average,
+bitwise_and,
+bitwise_not,
+bitwise_or,
+bitwise_xor,
+bypass,
+divide,
+is_equal,
+is_ge,
+is_gt,
+is_le,
+is_lt,
+logical_and,
+logical_or,
+logical_shift_left,
+logical_shift_right,
+logical_xor,
+max,
+min,
+mod,
+mult,
+not_equal,
+pow,
+rsqrt,
+subtract,
 };
 
 enum class DropoutThresholdType {
-  DropRate = 1,
-  KeepRate,
+DropRate = 1,
+KeepRate,
 };
 
 enum class AccumCmd {
-  Idle = 1,
-  Zero,
-  Accumulate,
-  ZeroAccumulate,
-  LoadAccumulate,
+Idle = 1,
+Zero,
+Accumulate,
+ZeroAccumulate,
+LoadAccumulate,
 };
 
 enum class ActivationFunc {
-  abs = 1,
-  arctan,
-  copy,
-  erf,
-  erf_dx,
-  exp,
-  gelu,
-  gelu_apprx_tanh,
-  gelu_dx,
-  log,
-  mish,
-  reciprocal,
-  relu,
-  rsqrt,
-  sigmoid,
-  sign,
-  silu,
-  silu_dx,
-  sin,
-  softplus,
-  sqrt,
-  square,
-  tanh,
+abs = 1,
+arctan,
+copy,
+erf,
+erf_dx,
+exp,
+gelu,
+gelu_apprx_tanh,
+gelu_dx,
+log,
+mish,
+reciprocal,
+relu,
+rsqrt,
+sigmoid,
+sign,
+silu,
+silu_dx,
+sin,
+softplus,
+sqrt,
+square,
+tanh,
 };
 
 enum class AffineSelectCmp {
-  GreaterThan = 1,
-  GreaterThanEq,
-  Eq,
-  NotEq,
+GreaterThan = 1,
+GreaterThanEq,
+Eq,
+NotEq,
 };
 
 enum class DgeComputeOp {
-  none = 1,
-  add,
+none = 1,
+add,
 };
 
 struct DmaBounds {
-  enum class Tag {
-    disable = 1,
-    enable,
-    reg,
-  };
+enum class Tag {
+disable = 1,
+enable,
+reg,
+};
   Tag tag;
   DmaBounds(Tag tag) : tag(tag) {}
 };
 
 struct DmaBoundsDisableWrapper final : DmaBounds {
-  DmaBoundsDisableWrapper() : DmaBounds(Tag::disable) {}
+ DmaBoundsDisableWrapper() : DmaBounds(Tag::disable) {}
 };
 
 struct DmaBoundsEnableWrapper final : DmaBounds {
-  DmaBoundsEnableWrapper() : DmaBounds(Tag::enable) {}
+ DmaBoundsEnableWrapper() : DmaBounds(Tag::enable) {}
 };
 
 struct DmaBoundsRegWrapper final : DmaBounds {
-  Nat reg;
-  DmaBoundsRegWrapper() : DmaBounds(Tag::reg) {}
+Nat reg;
+ DmaBoundsRegWrapper() : DmaBounds(Tag::reg) {}
 };
 
 enum class MatmulGroupElement {
-  first = 1,
-  middle,
-  last,
-  whole,
+first = 1,
+middle,
+last,
+whole,
 };
 
 struct IndexMissBehavior {
-  enum class Tag {
-    imm = 1,
-    skip,
-  };
+enum class Tag {
+imm = 1,
+skip,
+};
   Tag tag;
   IndexMissBehavior(Tag tag) : tag(tag) {}
 };
 
 struct IndexMissBehaviorImmWrapper final : IndexMissBehavior {
-  Ptr<Immediate> value;
-  IndexMissBehaviorImmWrapper() : IndexMissBehavior(Tag::imm) {}
+Ptr<Immediate> value;
+ IndexMissBehaviorImmWrapper() : IndexMissBehavior(Tag::imm) {}
 };
 
 struct IndexMissBehaviorSkipWrapper final : IndexMissBehavior {
-  IndexMissBehaviorSkipWrapper() : IndexMissBehavior(Tag::skip) {}
+ IndexMissBehaviorSkipWrapper() : IndexMissBehavior(Tag::skip) {}
 };
 
 enum class TensorScalarReverseOps {
-  none = 1,
-  first,
-  second,
-  both,
+none = 1,
+first,
+second,
+both,
 };
 
 enum class TensorSubDim {
-  X = 1,
-  XY,
-  XYZ,
-  XYZW,
+X = 1,
+XY,
+XYZ,
+XYZW,
 };
 
 struct Dropout final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
   DropoutThresholdType thresholdType;
-  Ptr<Immediate> threshold;
+  Ptr<Operand> threshold;
+  Option<Dtype> dtype;
 };
 
 struct Activate final {
@@ -426,23 +514,24 @@ struct Activate final {
   ActivationFunc activationFunc;
   Ptr<Immediate> scale;
   Ptr<Immediate> bias;
-  Ptr<Immediate> imm;
+  Option<AluOp> reduceOp;
+  Option<Ptr<TensorRef>> reduceRes;
 };
 
 struct AffineSelect final {
   Ptr<TensorRef> dst;
-  Ptr<TensorRef> src;
-  AffineSelectCmp fillMode;
-  Nat fillReg;
-  Ptr<DataPattern> maskPattern;
+  Ptr<DataPattern> pred;
+  Ptr<TensorRef> onTrueTile;
+  Ptr<Immediate> onFalseValue;
+  Option<Dtype> dtype;
 };
 
 struct DmaCopy final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
   DgeComputeOp compute_op;
-  Ptr<DmaBounds> dstBoundsCheck;
-  Ptr<DmaBounds> srcBoundsCheck;
+  Ptr<DmaBounds> oobMode;
+  Nat dgeMode;
 };
 
 struct DmaTranspose final {
@@ -453,6 +542,8 @@ struct DmaTranspose final {
 struct Transpose final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
+  Option<Dtype> dtype;
+  Engine engine;
 };
 
 struct LoadMaskRegister final {
@@ -462,17 +553,22 @@ struct LoadMaskRegister final {
 struct Shuffle final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
+  List<Ptr<Immediate>> shuffleMask;
+  Option<Dtype> dtype;
 };
 
 struct MemSet final {
   Ptr<TensorRef> dst;
   Ptr<Immediate> value;
   Nat count;
+  Dtype dtype;
+  Engine engine;
 };
 
 struct Iota final {
   Ptr<TensorRef> dst;
   Ptr<DataPattern> pattern;
+  Option<Dtype> dtype;
 };
 
 struct LoadStationary final {
@@ -489,38 +585,43 @@ struct MatMul final {
 struct LocalGather final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
-  Ptr<IndexMissBehavior> indexMissBehavior;
-  Bool freePoolBuffer;
+  Ptr<TensorRef> index;
+  Ptr<Immediate> numElemPerIdx;
+  Option<Ptr<Immediate>> numValidIndicies;
 };
 
 struct RangeSelect final {
   Ptr<TensorRef> dst;
-  Ptr<TensorRef> src;
   AccumCmd reduceCommand;
-  AluOp reduceOp;
-  Float base;
-  Float fillValue;
+  Option<Ptr<TensorRef>> reduceRes;
+  Option<AluOp> reduceOp;
   AluOp compOp0;
   AluOp compOp1;
-  Ptr<Immediate> bound0;
-  Ptr<Immediate> bound1;
+  Ptr<TensorRef> bound0;
+  Ptr<TensorRef> bound1;
+  Ptr<Immediate> rangeStart;
+  Ptr<TensorRef> onTrueTile;
+  Ptr<Immediate> onFalseValue;
+  Option<Dtype> dtype;
 };
 
 struct ScalarTensorTensor final {
   Ptr<TensorRef> dst;
-  Ptr<TensorRef> src0;
-  Ptr<TensorRef> src1;
+  Ptr<TensorRef> data;
+  Ptr<Operand> src0;
+  Ptr<Operand> src1;
   AluOp op0;
   AluOp op1;
   TensorScalarReverseOps reverseOperands;
-  Ptr<Immediate> imm0;
-  AccumCmd accumulatorCmd;
+  Option<Dtype> dtype;
 };
 
 struct CopyPredicated final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
   Ptr<TensorRef> predicate;
+  Option<Dtype> dtype;
+  Bool reversePred;
 };
 
 struct TensorTensorScan final {
@@ -530,8 +631,8 @@ struct TensorTensorScan final {
   AluOp op0;
   AluOp op1;
   TensorScalarReverseOps reverseOperands;
-  Ptr<Immediate> imm0;
-  AccumCmd accumulatorCmd;
+  Ptr<Operand> initial;
+  Option<Dtype> dtype;
 };
 
 struct MatchValueLoad final {
@@ -541,56 +642,70 @@ struct MatchValueLoad final {
 struct FindIndex8 final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
+  Ptr<TensorRef> vals;
+  Option<Dtype> dtype;
 };
 
 struct MatchReplace8 final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
+  Ptr<TensorRef> vals;
   Ptr<Immediate> replaceValue;
+  Option<Ptr<TensorRef>> dstIdx;
+  Option<Dtype> dtype;
 };
 
 struct Max8 final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
+  Option<Dtype> dtype;
 };
 
 struct BatchNormAggregate final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
+  Option<Dtype> dtype;
 };
 
 struct BatchNormStats final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
+  Option<Dtype> dtype;
 };
 
 struct Reciprocal final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
+  Option<Dtype> dtype;
 };
 
 struct Copy final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
-  Option<TensorSubDim> opDim;
+  Option<Dtype> dtype;
+  Engine engine;
 };
 
 struct TensorReduce final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
   AluOp op;
-  TensorSubDim opDim;
+  Ptr<Axis> axis;
   Bool negated;
+  Option<Dtype> dtype;
+  Bool keepdims;
 };
 
 struct TensorScalar final {
   Ptr<TensorRef> dst;
   Ptr<TensorRef> src;
-  Ptr<Immediate> imm0;
+  Ptr<Operand> operand0;
   AluOp op0;
-  Ptr<Immediate> imm1;
-  AluOp op1;
+  Option<Ptr<Operand>> operand1;
+  Option<AluOp> op1;
   TensorScalarReverseOps reverse;
+  Engine engine;
+  Option<Dtype> dtype;
 };
 
 struct TensorTensor final {
@@ -598,6 +713,8 @@ struct TensorTensor final {
   Ptr<TensorRef> src0;
   Ptr<TensorRef> src1;
   AluOp op;
+  Option<Dtype> dtype;
+  Engine engine;
 };
 
 struct NcMatMul final {
@@ -611,222 +728,269 @@ struct NcMatMul final {
   List<Nat> tileSize;
 };
 
-struct Operator {
-  enum class Tag {
-    activate = 1,
-    affineSelect,
-    batchNormAggregate,
-    batchNormStats,
-    copy,
-    copyPredicated,
-    dmaCopy,
-    dmaTranspose,
-    dropout,
-    findIndex8,
-    iota,
-    loadMaskRegister,
-    loadStationary,
-    localGather,
-    matMul,
-    matchReplace8,
-    matchValueLoad,
-    max8,
-    memSet,
-    rangeSelect,
-    reciprocal,
-    scalarTensorTensor,
-    shuffle,
-    tensorReduce,
-    tensorScalar,
-    tensorTensor,
-    tensorTensorScan,
-    transpose,
-    ncMatMul,
-  };
+struct NKIOperator {
+enum class Tag {
+activate = 1,
+affineSelect,
+batchNormAggregate,
+batchNormStats,
+copy,
+copyPredicated,
+dmaCopy,
+dmaTranspose,
+dropout,
+findIndex8,
+iota,
+loadMaskRegister,
+loadStationary,
+localGather,
+matMul,
+matchReplace8,
+matchValueLoad,
+max8,
+memSet,
+rangeSelect,
+reciprocal,
+scalarTensorTensor,
+shuffle,
+tensorReduce,
+tensorScalar,
+tensorScalarReduce,
+tensorTensor,
+tensorTensorScan,
+transpose,
+ncMatMul,
+activationReduce,
+tensorPartitionReduce,
+};
   Tag tag;
-  Operator(Tag tag) : tag(tag) {}
+  NKIOperator(Tag tag) : tag(tag) {}
 };
 
-struct OperatorActivateWrapper final : Operator {
-  Ptr<Activate> op;
-  OperatorActivateWrapper() : Operator(Tag::activate) {}
+struct NKIOperatorActivateWrapper final : NKIOperator {
+Ptr<Activate> op;
+ NKIOperatorActivateWrapper() : NKIOperator(Tag::activate) {}
 };
 
-struct OperatorAffineSelectWrapper final : Operator {
-  Ptr<AffineSelect> op;
-  OperatorAffineSelectWrapper() : Operator(Tag::affineSelect) {}
+struct NKIOperatorAffineSelectWrapper final : NKIOperator {
+Ptr<AffineSelect> op;
+ NKIOperatorAffineSelectWrapper() : NKIOperator(Tag::affineSelect) {}
 };
 
-struct OperatorBatchNormAggregateWrapper final : Operator {
-  Ptr<BatchNormAggregate> op;
-  OperatorBatchNormAggregateWrapper() : Operator(Tag::batchNormAggregate) {}
+struct NKIOperatorBatchNormAggregateWrapper final : NKIOperator {
+Ptr<BatchNormAggregate> op;
+ NKIOperatorBatchNormAggregateWrapper() : NKIOperator(Tag::batchNormAggregate) {}
 };
 
-struct OperatorBatchNormStatsWrapper final : Operator {
-  Ptr<BatchNormStats> op;
-  OperatorBatchNormStatsWrapper() : Operator(Tag::batchNormStats) {}
+struct NKIOperatorBatchNormStatsWrapper final : NKIOperator {
+Ptr<BatchNormStats> op;
+ NKIOperatorBatchNormStatsWrapper() : NKIOperator(Tag::batchNormStats) {}
 };
 
-struct OperatorCopyWrapper final : Operator {
-  Ptr<Copy> op;
-  OperatorCopyWrapper() : Operator(Tag::copy) {}
+struct NKIOperatorCopyWrapper final : NKIOperator {
+Ptr<Copy> op;
+ NKIOperatorCopyWrapper() : NKIOperator(Tag::copy) {}
 };
 
-struct OperatorCopyPredicatedWrapper final : Operator {
-  Ptr<CopyPredicated> op;
-  OperatorCopyPredicatedWrapper() : Operator(Tag::copyPredicated) {}
+struct NKIOperatorCopyPredicatedWrapper final : NKIOperator {
+Ptr<CopyPredicated> op;
+ NKIOperatorCopyPredicatedWrapper() : NKIOperator(Tag::copyPredicated) {}
 };
 
-struct OperatorDmaCopyWrapper final : Operator {
-  Ptr<DmaCopy> op;
-  OperatorDmaCopyWrapper() : Operator(Tag::dmaCopy) {}
+struct NKIOperatorDmaCopyWrapper final : NKIOperator {
+Ptr<DmaCopy> op;
+ NKIOperatorDmaCopyWrapper() : NKIOperator(Tag::dmaCopy) {}
 };
 
-struct OperatorDmaTransposeWrapper final : Operator {
-  Ptr<DmaTranspose> op;
-  OperatorDmaTransposeWrapper() : Operator(Tag::dmaTranspose) {}
+struct NKIOperatorDmaTransposeWrapper final : NKIOperator {
+Ptr<DmaTranspose> op;
+ NKIOperatorDmaTransposeWrapper() : NKIOperator(Tag::dmaTranspose) {}
 };
 
-struct OperatorDropoutWrapper final : Operator {
-  Ptr<Dropout> op;
-  OperatorDropoutWrapper() : Operator(Tag::dropout) {}
+struct NKIOperatorDropoutWrapper final : NKIOperator {
+Ptr<Dropout> op;
+ NKIOperatorDropoutWrapper() : NKIOperator(Tag::dropout) {}
 };
 
-struct OperatorFindIndex8Wrapper final : Operator {
-  Ptr<FindIndex8> op;
-  OperatorFindIndex8Wrapper() : Operator(Tag::findIndex8) {}
+struct NKIOperatorFindIndex8Wrapper final : NKIOperator {
+Ptr<FindIndex8> op;
+ NKIOperatorFindIndex8Wrapper() : NKIOperator(Tag::findIndex8) {}
 };
 
-struct OperatorIotaWrapper final : Operator {
-  Ptr<Iota> op;
-  OperatorIotaWrapper() : Operator(Tag::iota) {}
+struct NKIOperatorIotaWrapper final : NKIOperator {
+Ptr<Iota> op;
+ NKIOperatorIotaWrapper() : NKIOperator(Tag::iota) {}
 };
 
-struct OperatorLoadMaskRegisterWrapper final : Operator {
-  Ptr<LoadMaskRegister> op;
-  OperatorLoadMaskRegisterWrapper() : Operator(Tag::loadMaskRegister) {}
+struct NKIOperatorLoadMaskRegisterWrapper final : NKIOperator {
+Ptr<LoadMaskRegister> op;
+ NKIOperatorLoadMaskRegisterWrapper() : NKIOperator(Tag::loadMaskRegister) {}
 };
 
-struct OperatorLoadStationaryWrapper final : Operator {
-  Ptr<LoadStationary> op;
-  OperatorLoadStationaryWrapper() : Operator(Tag::loadStationary) {}
+struct NKIOperatorLoadStationaryWrapper final : NKIOperator {
+Ptr<LoadStationary> op;
+ NKIOperatorLoadStationaryWrapper() : NKIOperator(Tag::loadStationary) {}
 };
 
-struct OperatorLocalGatherWrapper final : Operator {
-  Ptr<LocalGather> op;
-  OperatorLocalGatherWrapper() : Operator(Tag::localGather) {}
+struct NKIOperatorLocalGatherWrapper final : NKIOperator {
+Ptr<LocalGather> op;
+ NKIOperatorLocalGatherWrapper() : NKIOperator(Tag::localGather) {}
 };
 
-struct OperatorMatMulWrapper final : Operator {
-  Ptr<MatMul> op;
-  OperatorMatMulWrapper() : Operator(Tag::matMul) {}
+struct NKIOperatorMatMulWrapper final : NKIOperator {
+Ptr<MatMul> op;
+ NKIOperatorMatMulWrapper() : NKIOperator(Tag::matMul) {}
 };
 
-struct OperatorMatchReplace8Wrapper final : Operator {
-  Ptr<MatchReplace8> op;
-  OperatorMatchReplace8Wrapper() : Operator(Tag::matchReplace8) {}
+struct NKIOperatorMatchReplace8Wrapper final : NKIOperator {
+Ptr<MatchReplace8> op;
+ NKIOperatorMatchReplace8Wrapper() : NKIOperator(Tag::matchReplace8) {}
 };
 
-struct OperatorMatchValueLoadWrapper final : Operator {
-  Ptr<MatchValueLoad> op;
-  OperatorMatchValueLoadWrapper() : Operator(Tag::matchValueLoad) {}
+struct NKIOperatorMatchValueLoadWrapper final : NKIOperator {
+Ptr<MatchValueLoad> op;
+ NKIOperatorMatchValueLoadWrapper() : NKIOperator(Tag::matchValueLoad) {}
 };
 
-struct OperatorMax8Wrapper final : Operator {
-  Ptr<Max8> op;
-  OperatorMax8Wrapper() : Operator(Tag::max8) {}
+struct NKIOperatorMax8Wrapper final : NKIOperator {
+Ptr<Max8> op;
+ NKIOperatorMax8Wrapper() : NKIOperator(Tag::max8) {}
 };
 
-struct OperatorMemSetWrapper final : Operator {
-  Ptr<MemSet> op;
-  OperatorMemSetWrapper() : Operator(Tag::memSet) {}
+struct NKIOperatorMemSetWrapper final : NKIOperator {
+Ptr<MemSet> op;
+ NKIOperatorMemSetWrapper() : NKIOperator(Tag::memSet) {}
 };
 
-struct OperatorRangeSelectWrapper final : Operator {
-  Ptr<RangeSelect> op;
-  OperatorRangeSelectWrapper() : Operator(Tag::rangeSelect) {}
+struct NKIOperatorRangeSelectWrapper final : NKIOperator {
+Ptr<RangeSelect> op;
+ NKIOperatorRangeSelectWrapper() : NKIOperator(Tag::rangeSelect) {}
 };
 
-struct OperatorReciprocalWrapper final : Operator {
-  Ptr<Reciprocal> op;
-  OperatorReciprocalWrapper() : Operator(Tag::reciprocal) {}
+struct NKIOperatorReciprocalWrapper final : NKIOperator {
+Ptr<Reciprocal> op;
+ NKIOperatorReciprocalWrapper() : NKIOperator(Tag::reciprocal) {}
 };
 
-struct OperatorScalarTensorTensorWrapper final : Operator {
-  Ptr<ScalarTensorTensor> op;
-  OperatorScalarTensorTensorWrapper() : Operator(Tag::scalarTensorTensor) {}
+struct NKIOperatorScalarTensorTensorWrapper final : NKIOperator {
+Ptr<ScalarTensorTensor> op;
+ NKIOperatorScalarTensorTensorWrapper() : NKIOperator(Tag::scalarTensorTensor) {}
 };
 
-struct OperatorShuffleWrapper final : Operator {
-  Ptr<Shuffle> op;
-  OperatorShuffleWrapper() : Operator(Tag::shuffle) {}
+struct NKIOperatorShuffleWrapper final : NKIOperator {
+Ptr<Shuffle> op;
+ NKIOperatorShuffleWrapper() : NKIOperator(Tag::shuffle) {}
 };
 
-struct OperatorTensorReduceWrapper final : Operator {
-  Ptr<TensorReduce> op;
-  OperatorTensorReduceWrapper() : Operator(Tag::tensorReduce) {}
+struct NKIOperatorTensorReduceWrapper final : NKIOperator {
+Ptr<TensorReduce> op;
+ NKIOperatorTensorReduceWrapper() : NKIOperator(Tag::tensorReduce) {}
 };
 
-struct OperatorTensorScalarWrapper final : Operator {
-  Ptr<TensorScalar> op;
-  OperatorTensorScalarWrapper() : Operator(Tag::tensorScalar) {}
+struct NKIOperatorTensorScalarWrapper final : NKIOperator {
+Ptr<TensorScalar> op;
+ NKIOperatorTensorScalarWrapper() : NKIOperator(Tag::tensorScalar) {}
 };
 
-struct OperatorTensorTensorWrapper final : Operator {
-  Ptr<TensorTensor> op;
-  OperatorTensorTensorWrapper() : Operator(Tag::tensorTensor) {}
+struct NKIOperatorTensorScalarReduceWrapper final : NKIOperator {
+Ptr<TensorScalarReduce> op;
+ NKIOperatorTensorScalarReduceWrapper() : NKIOperator(Tag::tensorScalarReduce) {}
 };
 
-struct OperatorTensorTensorScanWrapper final : Operator {
-  Ptr<TensorTensorScan> op;
-  OperatorTensorTensorScanWrapper() : Operator(Tag::tensorTensorScan) {}
+struct NKIOperatorTensorTensorWrapper final : NKIOperator {
+Ptr<TensorTensor> op;
+ NKIOperatorTensorTensorWrapper() : NKIOperator(Tag::tensorTensor) {}
 };
 
-struct OperatorTransposeWrapper final : Operator {
-  Ptr<Transpose> op;
-  OperatorTransposeWrapper() : Operator(Tag::transpose) {}
+struct NKIOperatorTensorTensorScanWrapper final : NKIOperator {
+Ptr<TensorTensorScan> op;
+ NKIOperatorTensorTensorScanWrapper() : NKIOperator(Tag::tensorTensorScan) {}
 };
 
-struct OperatorNcMatMulWrapper final : Operator {
-  Ptr<NcMatMul> op;
-  OperatorNcMatMulWrapper() : Operator(Tag::ncMatMul) {}
+struct NKIOperatorTransposeWrapper final : NKIOperator {
+Ptr<Transpose> op;
+ NKIOperatorTransposeWrapper() : NKIOperator(Tag::transpose) {}
+};
+
+struct NKIOperatorNcMatMulWrapper final : NKIOperator {
+Ptr<NcMatMul> op;
+ NKIOperatorNcMatMulWrapper() : NKIOperator(Tag::ncMatMul) {}
+};
+
+struct NKIOperatorActivationReduceWrapper final : NKIOperator {
+Ptr<ActivationReduce> op;
+ NKIOperatorActivationReduceWrapper() : NKIOperator(Tag::activationReduce) {}
+};
+
+struct NKIOperatorTensorPartitionReduceWrapper final : NKIOperator {
+Ptr<TensorPartitionReduce> op;
+ NKIOperatorTensorPartitionReduceWrapper() : NKIOperator(Tag::tensorPartitionReduce) {}
+};
+
+struct TensorScalarReduce final {
+  Ptr<TensorRef> dst;
+  Ptr<TensorRef> src;
+  Ptr<Operand> operand0;
+  AluOp op0;
+  Bool reverse0;
+  Option<Dtype> dtype;
+  Option<AluOp> reduceOp;
+  Ptr<TensorRef> reduceRes;
+};
+
+struct ActivationReduce final {
+  Ptr<TensorRef> dst;
+  ActivationFunc op;
+  Ptr<TensorRef> data;
+  Option<AluOp> reduceOp;
+  Option<Ptr<TensorRef>> reduceRes;
+  List<Ptr<Immediate>> bias;
+  Ptr<Scale> scale;
+  Option<Dtype> dtype;
+};
+
+struct TensorPartitionReduce final {
+  Ptr<TensorRef> dst;
+  AluOp op;
+  Ptr<TensorRef> data;
+  Option<Dtype> dtype;
 };
 
 struct Value {
-  enum class Tag {
-    var = 1,
-    boolean,
-    int32,
-    float32,
-    access,
-  };
+enum class Tag {
+var = 1,
+boolean,
+int32,
+float32,
+access,
+};
   Tag tag;
   Value(Tag tag) : tag(tag) {}
 };
 
 struct ValueVarWrapper final : Value {
-  String x;
-  ValueVarWrapper() : Value(Tag::var) {}
+String x;
+ ValueVarWrapper() : Value(Tag::var) {}
 };
 
 struct ValueBoolWrapper final : Value {
-  Bool value;
-  ValueBoolWrapper() : Value(Tag::boolean) {}
+Bool value;
+ ValueBoolWrapper() : Value(Tag::boolean) {}
 };
 
 struct ValueIntWrapper final : Value {
-  Int value;
-  ValueIntWrapper() : Value(Tag::int32) {}
+Int value;
+ ValueIntWrapper() : Value(Tag::int32) {}
 };
 
 struct ValueFloatWrapper final : Value {
-  Float value;
-  ValueFloatWrapper() : Value(Tag::float32) {}
+Float value;
+ ValueFloatWrapper() : Value(Tag::float32) {}
 };
 
 struct ValueAccessWrapper final : Value {
-  Ptr<Access> a;
-  ValueAccessWrapper() : Value(Tag::access) {}
+Ptr<Access> a;
+ ValueAccessWrapper() : Value(Tag::access) {}
 };
 
 struct Keyword final {
@@ -835,58 +999,58 @@ struct Keyword final {
 };
 
 struct Expr {
-  enum class Tag {
-    value = 1,
-    call,
-  };
+enum class Tag {
+value = 1,
+call,
+};
   Tag tag;
   Expr(Tag tag) : tag(tag) {}
 };
 
 struct ExprValueWrapper final : Expr {
-  Ptr<Value> v;
-  ExprValueWrapper() : Expr(Tag::value) {}
+Ptr<Value> v;
+ ExprValueWrapper() : Expr(Tag::value) {}
 };
 
 struct ExprCallWrapper final : Expr {
-  String f;
-  List<Ptr<Value>> args;
-  List<Ptr<Keyword>> kwargs;
-  ExprCallWrapper() : Expr(Tag::call) {}
+String f;
+List<Ptr<Value>> args;
+List<Ptr<Keyword>> kwargs;
+ ExprCallWrapper() : Expr(Tag::call) {}
 };
 
 struct Stmt {
-  enum class Tag {
-    ret = 1,
-    assign,
-    store,
-    oper,
-  };
+enum class Tag {
+ret = 1,
+assign,
+store,
+oper,
+};
   Tag tag;
   Stmt(Tag tag) : tag(tag) {}
 };
 
 struct StmtRetWrapper final : Stmt {
-  Ptr<Value> v;
-  StmtRetWrapper() : Stmt(Tag::ret) {}
+Ptr<Value> v;
+ StmtRetWrapper() : Stmt(Tag::ret) {}
 };
 
 struct StmtAssignWrapper final : Stmt {
-  String x;
-  Ptr<Expr> e;
-  StmtAssignWrapper() : Stmt(Tag::assign) {}
+String x;
+Ptr<Expr> e;
+ StmtAssignWrapper() : Stmt(Tag::assign) {}
 };
 
 struct StmtStoreWrapper final : Stmt {
-  Ptr<Access> dst;
-  Ptr<Operator> op;
-  List<Ptr<Value>> args;
-  StmtStoreWrapper() : Stmt(Tag::store) {}
+Ptr<Access> dst;
+Ptr<NKIOperator> op;
+List<Ptr<Value>> args;
+ StmtStoreWrapper() : Stmt(Tag::store) {}
 };
 
 struct StmtOperWrapper final : Stmt {
-  Ptr<Operator> op;
-  StmtOperWrapper() : Stmt(Tag::oper) {}
+Ptr<NKIOperator> op;
+ StmtOperWrapper() : Stmt(Tag::oper) {}
 };
 
 struct Kernel final {
@@ -895,6 +1059,37 @@ struct Kernel final {
   List<Ptr<TensorName>> outputs;
   List<Ptr<Stmt>> body;
 };
+
+struct Operand {
+enum class Tag {
+imm = 1,
+tile,
+};
+  Tag tag;
+  Operand(Tag tag) : tag(tag) {}
+};
+
+struct OperandImmWrapper final : Operand {
+Ptr<Immediate> i;
+ OperandImmWrapper() : Operand(Tag::imm) {}
+};
+
+struct OperandTileWrapper final : Operand {
+Ptr<TensorRef> t;
+ OperandTileWrapper() : Operand(Tag::tile) {}
+};
+
+
+
+
+
+
+
+
+
+
+
+
 
 struct KLRFile final {
   Nat major;
@@ -907,33 +1102,33 @@ struct KLRMetaData final {
 };
 
 struct Contents {
-  enum class Tag {
-    python = 1,
-    nki,
-    klir,
-    hlo,
-  };
+enum class Tag {
+python = 1,
+nki,
+klir,
+hlo,
+};
   Tag tag;
   Contents(Tag tag) : tag(tag) {}
 };
 
 struct ContentsPythonWrapper final : Contents {
-  Ptr<Kernel> kernel;
-  ContentsPythonWrapper() : Contents(Tag::python) {}
+Ptr<Kernel> kernel;
+ ContentsPythonWrapper() : Contents(Tag::python) {}
 };
 
 struct ContentsNkiWrapper final : Contents {
-  Ptr<Kernel> kernel;
-  ContentsNkiWrapper() : Contents(Tag::nki) {}
+Ptr<Kernel> kernel;
+ ContentsNkiWrapper() : Contents(Tag::nki) {}
 };
 
 struct ContentsKlirWrapper final : Contents {
-  Ptr<Kernel> kernel;
-  ContentsKlirWrapper() : Contents(Tag::klir) {}
+Ptr<Kernel> kernel;
+ ContentsKlirWrapper() : Contents(Tag::klir) {}
 };
 
 struct ContentsHloWrapper final : Contents {
-  String name;
-  ContentsHloWrapper() : Contents(Tag::hlo) {}
+String name;
+ ContentsHloWrapper() : Contents(Tag::hlo) {}
 };
-} // namespace klr
+}

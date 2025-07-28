@@ -205,6 +205,10 @@ def klrAST: MetaM (List LeanType) := do
     `KLR.Core.Engine,
     `KLR.Core.Immediate,
     `KLR.Core.ActivationImm,
+    `KLR.Core.Scale,
+    `KLR.Core.Scale,
+    `KLR.Core.Axis,
+    `KLR.Core.Operand,
     `KLR.Core.DataPattern,
     `KLR.Core.AluOp,
     `KLR.Core.DropoutThresholdType,
@@ -247,7 +251,7 @@ def klrAST: MetaM (List LeanType) := do
     `KLR.Core.TensorScalar,
     `KLR.Core.TensorTensor,
     `KLR.Core.NcMatMul,
-    `KLR.Core.Operator,
+    `KLR.Core.NKIOperator,
     `KLR.Core.TensorScalarReduce,
     `KLR.Core.ActivationReduce,
     `KLR.Core.TensorPartitionReduce,
@@ -257,6 +261,7 @@ def klrAST: MetaM (List LeanType) := do
     `KLR.Core.Expr,
     `KLR.Core.Stmt,
     `KLR.Core.Kernel,
+    `KLR.Core.Operand,
    ]
 
 private def header (isH : Bool) (includes : List String := []) : String :=

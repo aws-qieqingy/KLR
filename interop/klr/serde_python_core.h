@@ -13,53 +13,44 @@ Authors: Paul Govereau, Sean McLaughlin
 #include "ast_common.h"
 #include "ast_python_core.h"
 
-bool Python_Const_ser(FILE *out, struct Python_Const *x);
+bool Python_Const_ser(FILE *out, struct Python_Const* x);
 bool Python_Ctx_ser(FILE *out, enum Python_Ctx x);
 bool Python_BoolOp_ser(FILE *out, enum Python_BoolOp x);
 bool Python_CmpOp_ser(FILE *out, enum Python_CmpOp x);
 bool Python_UnaryOp_ser(FILE *out, enum Python_UnaryOp x);
 bool Python_BinOp_ser(FILE *out, enum Python_BinOp x);
-bool Python_Expr__ser(FILE *out, struct Python_Expr_ *x);
-bool Python_Expr_ser(FILE *out, struct Python_Expr *x);
-bool Python_Keyword_ser(FILE *out, struct Python_Keyword *x);
-bool Python_Stmt__ser(FILE *out, struct Python_Stmt_ *x);
-bool Python_Stmt_ser(FILE *out, struct Python_Stmt *x);
-bool Python_Args_ser(FILE *out, struct Python_Args *x);
-bool Python_Fun_ser(FILE *out, struct Python_Fun *x);
-bool Python_Kernel_ser(FILE *out, struct Python_Kernel *x);
-bool Python_Expr_List_ser(FILE *out, struct Python_Expr_List *x);
-bool Python_Expr_Option_ser(FILE *out, struct Python_Expr *x);
-bool Python_CmpOp_List_ser(FILE *out, struct Python_CmpOp_List *x);
-bool Python_Keyword_List_ser(FILE *out, struct Python_Keyword_List *x);
-bool Python_Stmt_List_ser(FILE *out, struct Python_Stmt_List *x);
-bool Python_Fun_List_ser(FILE *out, struct Python_Fun_List *x);
+bool Python_Expr__ser(FILE *out, struct Python_Expr_* x);
+bool Python_Expr_ser(FILE *out, struct Python_Expr* x);
+bool Python_Keyword_ser(FILE *out, struct Python_Keyword* x);
+bool Python_Stmt__ser(FILE *out, struct Python_Stmt_* x);
+bool Python_Stmt_ser(FILE *out, struct Python_Stmt* x);
+bool Python_Args_ser(FILE *out, struct Python_Args* x);
+bool Python_Fun_ser(FILE *out, struct Python_Fun* x);
+bool Python_Kernel_ser(FILE *out, struct Python_Kernel* x);
+bool Python_Expr_List_ser(FILE *out, struct Python_Expr_List* x);
+bool Python_Expr_Option_ser(FILE *out, struct Python_Expr* x);
+bool Python_CmpOp_List_ser(FILE *out, struct Python_CmpOp_List* x);
+bool Python_Keyword_List_ser(FILE *out, struct Python_Keyword_List* x);
+bool Python_Stmt_List_ser(FILE *out, struct Python_Stmt_List* x);
+bool Python_Fun_List_ser(FILE *out, struct Python_Fun_List* x);
 
-bool Python_Const_des(FILE *in, struct region *region, struct Python_Const **x);
-bool Python_Ctx_des(FILE *in, struct region *region, enum Python_Ctx *x);
-bool Python_BoolOp_des(FILE *in, struct region *region, enum Python_BoolOp *x);
-bool Python_CmpOp_des(FILE *in, struct region *region, enum Python_CmpOp *x);
-bool Python_UnaryOp_des(FILE *in, struct region *region,
-                        enum Python_UnaryOp *x);
-bool Python_BinOp_des(FILE *in, struct region *region, enum Python_BinOp *x);
-bool Python_Expr__des(FILE *in, struct region *region, struct Python_Expr_ **x);
-bool Python_Expr_des(FILE *in, struct region *region, struct Python_Expr **x);
-bool Python_Keyword_des(FILE *in, struct region *region,
-                        struct Python_Keyword **x);
-bool Python_Stmt__des(FILE *in, struct region *region, struct Python_Stmt_ **x);
-bool Python_Stmt_des(FILE *in, struct region *region, struct Python_Stmt **x);
-bool Python_Args_des(FILE *in, struct region *region, struct Python_Args **x);
-bool Python_Fun_des(FILE *in, struct region *region, struct Python_Fun **x);
-bool Python_Kernel_des(FILE *in, struct region *region,
-                       struct Python_Kernel **x);
-bool Python_Expr_List_des(FILE *in, struct region *region,
-                          struct Python_Expr_List **x);
-bool Python_Expr_Option_des(FILE *in, struct region *region,
-                            struct Python_Expr **x);
-bool Python_CmpOp_List_des(FILE *in, struct region *region,
-                           struct Python_CmpOp_List **x);
-bool Python_Keyword_List_des(FILE *in, struct region *region,
-                             struct Python_Keyword_List **x);
-bool Python_Stmt_List_des(FILE *in, struct region *region,
-                          struct Python_Stmt_List **x);
-bool Python_Fun_List_des(FILE *in, struct region *region,
-                         struct Python_Fun_List **x);
+bool Python_Const_des(FILE *in, struct region *region, struct Python_Const** x);
+bool Python_Ctx_des(FILE *in, struct region *region, enum Python_Ctx* x);
+bool Python_BoolOp_des(FILE *in, struct region *region, enum Python_BoolOp* x);
+bool Python_CmpOp_des(FILE *in, struct region *region, enum Python_CmpOp* x);
+bool Python_UnaryOp_des(FILE *in, struct region *region, enum Python_UnaryOp* x);
+bool Python_BinOp_des(FILE *in, struct region *region, enum Python_BinOp* x);
+bool Python_Expr__des(FILE *in, struct region *region, struct Python_Expr_** x);
+bool Python_Expr_des(FILE *in, struct region *region, struct Python_Expr** x);
+bool Python_Keyword_des(FILE *in, struct region *region, struct Python_Keyword** x);
+bool Python_Stmt__des(FILE *in, struct region *region, struct Python_Stmt_** x);
+bool Python_Stmt_des(FILE *in, struct region *region, struct Python_Stmt** x);
+bool Python_Args_des(FILE *in, struct region *region, struct Python_Args** x);
+bool Python_Fun_des(FILE *in, struct region *region, struct Python_Fun** x);
+bool Python_Kernel_des(FILE *in, struct region *region, struct Python_Kernel** x);
+bool Python_Expr_List_des(FILE *in, struct region *region, struct Python_Expr_List** x);
+bool Python_Expr_Option_des(FILE *in, struct region *region, struct Python_Expr** x);
+bool Python_CmpOp_List_des(FILE *in, struct region *region, struct Python_CmpOp_List** x);
+bool Python_Keyword_List_des(FILE *in, struct region *region, struct Python_Keyword_List** x);
+bool Python_Stmt_List_des(FILE *in, struct region *region, struct Python_Stmt_List** x);
+bool Python_Fun_List_des(FILE *in, struct region *region, struct Python_Fun_List** x);

@@ -15,12 +15,12 @@ Authors: Paul Govereau, Sean McLaughlin
 // KLR.NKI Abstract Syntax
 
 enum NKI_Value_Tag {
-  NKI_Value_none = 1,
-  NKI_Value_bool,
-  NKI_Value_int,
-  NKI_Value_float,
-  NKI_Value_string,
-  NKI_Value_tensor,
+NKI_Value_none = 1,
+NKI_Value_bool,
+NKI_Value_int,
+NKI_Value_float,
+NKI_Value_string,
+NKI_Value_tensor,
 };
 struct NKI_Value_bool {
   bool value;
@@ -32,270 +32,271 @@ struct NKI_Value_float {
   f32 value;
 };
 struct NKI_Value_string {
-  char *value;
+  char* value;
 };
 struct NKI_Value_tensor {
-  struct Nat_List *shape;
-  char *dtype;
+  struct Nat_List* shape;
+  char* dtype;
 };
 struct NKI_Value {
-  enum NKI_Value_Tag tag;
-  union {
-    struct NKI_Value_bool b;
-    struct NKI_Value_int i;
-    struct NKI_Value_float f;
-    struct NKI_Value_string s;
-    struct NKI_Value_tensor tensor;
-  };
+enum NKI_Value_Tag tag;
+union {
+struct NKI_Value_bool b;
+struct NKI_Value_int i;
+struct NKI_Value_float f;
+struct NKI_Value_string s;
+struct NKI_Value_tensor tensor;
+};
 };
 
 enum NKI_BinOp {
-  NKI_BinOp_land = 1,
-  NKI_BinOp_lor,
-  NKI_BinOp_eq,
-  NKI_BinOp_ne,
-  NKI_BinOp_lt,
-  NKI_BinOp_le,
-  NKI_BinOp_gt,
-  NKI_BinOp_ge,
-  NKI_BinOp_add,
-  NKI_BinOp_sub,
-  NKI_BinOp_mul,
-  NKI_BinOp_div,
-  NKI_BinOp_mod,
-  NKI_BinOp_pow,
-  NKI_BinOp_floor,
-  NKI_BinOp_lshift,
-  NKI_BinOp_rshift,
-  NKI_BinOp_or,
-  NKI_BinOp_xor,
-  NKI_BinOp_and,
+NKI_BinOp_land = 1,
+NKI_BinOp_lor,
+NKI_BinOp_eq,
+NKI_BinOp_ne,
+NKI_BinOp_lt,
+NKI_BinOp_le,
+NKI_BinOp_gt,
+NKI_BinOp_ge,
+NKI_BinOp_add,
+NKI_BinOp_sub,
+NKI_BinOp_mul,
+NKI_BinOp_div,
+NKI_BinOp_mod,
+NKI_BinOp_pow,
+NKI_BinOp_floor,
+NKI_BinOp_lshift,
+NKI_BinOp_rshift,
+NKI_BinOp_or,
+NKI_BinOp_xor,
+NKI_BinOp_and,
 };
 
 enum NKI_Expr_Tag {
-  NKI_Expr_value = 1,
-  NKI_Expr_var,
-  NKI_Expr_tuple,
-  NKI_Expr_access,
-  NKI_Expr_binOp,
-  NKI_Expr_ifExp,
-  NKI_Expr_call,
+NKI_Expr_value = 1,
+NKI_Expr_var,
+NKI_Expr_tuple,
+NKI_Expr_access,
+NKI_Expr_binOp,
+NKI_Expr_ifExp,
+NKI_Expr_call,
 };
 struct NKI_Expr_value {
-  struct NKI_Value *value;
+  struct NKI_Value* value;
 };
 struct NKI_Expr_var {
-  char *name;
+  char* name;
 };
 struct NKI_Expr_tuple {
-  struct NKI_Expr_List *elements;
+  struct NKI_Expr_List* elements;
 };
 struct NKI_Expr_access {
-  struct NKI_Expr *expr;
-  struct NKI_Index_List *indices;
+  struct NKI_Expr* expr;
+  struct NKI_Index_List* indices;
 };
 struct NKI_Expr_binOp {
   enum NKI_BinOp op;
-  struct NKI_Expr *left;
-  struct NKI_Expr *right;
+  struct NKI_Expr* left;
+  struct NKI_Expr* right;
 };
 struct NKI_Expr_ifExp {
-  struct NKI_Expr *test;
-  struct NKI_Expr *body;
-  struct NKI_Expr *orelse;
+  struct NKI_Expr* test;
+  struct NKI_Expr* body;
+  struct NKI_Expr* orelse;
 };
 struct NKI_Expr_call {
-  struct NKI_Expr *f;
-  struct NKI_Expr_List *args;
-  struct NKI_Keyword_List *keywords;
+  struct NKI_Expr* f;
+  struct NKI_Expr_List* args;
+  struct NKI_Keyword_List* keywords;
 };
 struct NKI_Expr_ {
-  enum NKI_Expr_Tag tag;
-  union {
-    struct NKI_Expr_value value;
-    struct NKI_Expr_var var;
-    struct NKI_Expr_tuple tuple;
-    struct NKI_Expr_access access;
-    struct NKI_Expr_binOp binOp;
-    struct NKI_Expr_ifExp ifExp;
-    struct NKI_Expr_call call;
-  };
+enum NKI_Expr_Tag tag;
+union {
+struct NKI_Expr_value value;
+struct NKI_Expr_var var;
+struct NKI_Expr_tuple tuple;
+struct NKI_Expr_access access;
+struct NKI_Expr_binOp binOp;
+struct NKI_Expr_ifExp ifExp;
+struct NKI_Expr_call call;
+};
 };
 
 struct NKI_Expr {
-  struct NKI_Expr_ *expr;
-  struct Core_Pos *pos;
+  struct NKI_Expr_* expr;
+  struct Core_Pos* pos;
 };
 
 enum NKI_Index_Tag {
-  NKI_Index_coord = 1,
-  NKI_Index_slice,
-  NKI_Index_ellipsis,
+NKI_Index_coord = 1,
+NKI_Index_slice,
+NKI_Index_ellipsis,
 };
 struct NKI_Index_coord {
-  struct NKI_Expr *i;
+  struct NKI_Expr* i;
 };
 struct NKI_Index_slice {
-  struct NKI_Expr *l;
-  struct NKI_Expr *u;
-  struct NKI_Expr *step;
+  struct NKI_Expr* l;
+  struct NKI_Expr* u;
+  struct NKI_Expr* step;
 };
 struct NKI_Index {
-  enum NKI_Index_Tag tag;
-  union {
-    struct NKI_Index_coord coord;
-    struct NKI_Index_slice slice;
-  };
+enum NKI_Index_Tag tag;
+union {
+struct NKI_Index_coord coord;
+struct NKI_Index_slice slice;
+};
 };
 
 struct NKI_Keyword {
-  char *name;
-  struct NKI_Expr *expr;
+  char* name;
+  struct NKI_Expr* expr;
 };
 
 enum NKI_Pattern_Tag {
-  NKI_Pattern_var = 1,
-  NKI_Pattern_tuple,
+NKI_Pattern_var = 1,
+NKI_Pattern_tuple,
 };
 struct NKI_Pattern_var {
-  char *name;
+  char* name;
 };
 struct NKI_Pattern_tuple {
-  struct NKI_Pattern_List *xs;
+  struct NKI_Pattern_List* xs;
 };
 struct NKI_Pattern {
-  enum NKI_Pattern_Tag tag;
-  union {
-    struct NKI_Pattern_var var;
-    struct NKI_Pattern_tuple tuple;
-  };
+enum NKI_Pattern_Tag tag;
+union {
+struct NKI_Pattern_var var;
+struct NKI_Pattern_tuple tuple;
+};
 };
 
 enum NKI_Stmt_Tag {
-  NKI_Stmt_expr = 1,
-  NKI_Stmt_assert,
-  NKI_Stmt_ret,
-  NKI_Stmt_declare,
-  NKI_Stmt_letM,
-  NKI_Stmt_setM,
-  NKI_Stmt_ifStm,
-  NKI_Stmt_forLoop,
-  NKI_Stmt_breakLoop,
-  NKI_Stmt_continueLoop,
+NKI_Stmt_expr = 1,
+NKI_Stmt_assert,
+NKI_Stmt_ret,
+NKI_Stmt_declare,
+NKI_Stmt_letM,
+NKI_Stmt_setM,
+NKI_Stmt_ifStm,
+NKI_Stmt_forLoop,
+NKI_Stmt_breakLoop,
+NKI_Stmt_continueLoop,
 };
 struct NKI_Stmt_expr {
-  struct NKI_Expr *e;
+  struct NKI_Expr* e;
 };
 struct NKI_Stmt_assert {
-  struct NKI_Expr *e;
+  struct NKI_Expr* e;
 };
 struct NKI_Stmt_ret {
-  struct NKI_Expr *e;
+  struct NKI_Expr* e;
 };
 struct NKI_Stmt_declare {
-  char *x;
-  struct NKI_Expr *ty;
+  char* x;
+  struct NKI_Expr* ty;
 };
 struct NKI_Stmt_letM {
-  struct NKI_Pattern *p;
-  struct NKI_Expr *ty;
-  struct NKI_Expr *e;
+  struct NKI_Pattern* p;
+  struct NKI_Expr* ty;
+  struct NKI_Expr* e;
 };
 struct NKI_Stmt_setM {
-  struct NKI_Expr *x;
-  struct NKI_Expr *e;
+  struct NKI_Expr* x;
+  struct NKI_Expr* e;
   bool accum;
 };
 struct NKI_Stmt_ifStm {
-  struct NKI_Expr *e;
-  struct NKI_Stmt_List *thn;
-  struct NKI_Stmt_List *els;
+  struct NKI_Expr* e;
+  struct NKI_Stmt_List* thn;
+  struct NKI_Stmt_List* els;
 };
 struct NKI_Stmt_forLoop {
-  struct NKI_Expr *x;
-  struct NKI_Expr *iter;
-  struct NKI_Stmt_List *body;
+  struct NKI_Expr* x;
+  struct NKI_Expr* iter;
+  struct NKI_Stmt_List* body;
 };
 struct NKI_Stmt_ {
-  enum NKI_Stmt_Tag tag;
-  union {
-    struct NKI_Stmt_expr expr;
-    struct NKI_Stmt_assert assert;
-    struct NKI_Stmt_ret ret;
-    struct NKI_Stmt_declare declare;
-    struct NKI_Stmt_letM letM;
-    struct NKI_Stmt_setM setM;
-    struct NKI_Stmt_ifStm ifStm;
-    struct NKI_Stmt_forLoop forLoop;
-  };
+enum NKI_Stmt_Tag tag;
+union {
+struct NKI_Stmt_expr expr;
+struct NKI_Stmt_assert assert;
+struct NKI_Stmt_ret ret;
+struct NKI_Stmt_declare declare;
+struct NKI_Stmt_letM letM;
+struct NKI_Stmt_setM setM;
+struct NKI_Stmt_ifStm ifStm;
+struct NKI_Stmt_forLoop forLoop;
+};
 };
 
 struct NKI_Stmt {
-  struct NKI_Stmt_ *stmt;
-  struct Core_Pos *pos;
+  struct NKI_Stmt_* stmt;
+  struct Core_Pos* pos;
 };
 
 struct NKI_Param {
-  char *name;
-  struct NKI_Expr *dflt;
+  char* name;
+  struct NKI_Expr* dflt;
 };
 
 struct NKI_Fun {
-  char *name;
-  char *file;
+  char* name;
+  char* file;
   u32 line;
-  struct NKI_Stmt_List *body;
-  struct NKI_Param_List *args;
+  struct NKI_Stmt_List* body;
+  struct NKI_Param_List* args;
 };
 
 struct NKI_Arg {
-  char *name;
-  struct NKI_Expr *value;
+  char* name;
+  struct NKI_Expr* value;
 };
 
 struct NKI_Kernel {
-  char *entry;
-  struct NKI_Fun_List *funs;
-  struct NKI_Arg_List *args;
-  struct NKI_Arg_List *globals;
+  char* entry;
+  struct NKI_Fun_List* funs;
+  struct NKI_Arg_List* args;
+  struct NKI_Arg_List* globals;
 };
 
 struct NKI_Expr_List {
-  struct NKI_Expr_List *next;
-  struct NKI_Expr *expr;
+  struct NKI_Expr_List* next;
+  struct NKI_Expr* expr;
 };
 
 struct NKI_Index_List {
-  struct NKI_Index_List *next;
-  struct NKI_Index *index;
+  struct NKI_Index_List* next;
+  struct NKI_Index* index;
 };
 
 struct NKI_Keyword_List {
-  struct NKI_Keyword_List *next;
-  struct NKI_Keyword *keyword;
+  struct NKI_Keyword_List* next;
+  struct NKI_Keyword* keyword;
 };
 
+
 struct NKI_Pattern_List {
-  struct NKI_Pattern_List *next;
-  struct NKI_Pattern *pattern;
+  struct NKI_Pattern_List* next;
+  struct NKI_Pattern* pattern;
 };
 
 struct NKI_Stmt_List {
-  struct NKI_Stmt_List *next;
-  struct NKI_Stmt *stmt;
+  struct NKI_Stmt_List* next;
+  struct NKI_Stmt* stmt;
 };
 
 struct NKI_Param_List {
-  struct NKI_Param_List *next;
-  struct NKI_Param *param;
+  struct NKI_Param_List* next;
+  struct NKI_Param* param;
 };
 
 struct NKI_Fun_List {
-  struct NKI_Fun_List *next;
-  struct NKI_Fun *fun;
+  struct NKI_Fun_List* next;
+  struct NKI_Fun* fun;
 };
 
 struct NKI_Arg_List {
-  struct NKI_Arg_List *next;
-  struct NKI_Arg *arg;
+  struct NKI_Arg_List* next;
+  struct NKI_Arg* arg;
 };

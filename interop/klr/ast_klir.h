@@ -15,33 +15,33 @@ Authors: Paul Govereau, Sean McLaughlin
 // KLR.Core Abstract Syntax
 
 enum Core_Memory {
-  Core_Memory_hbm = 1,
-  Core_Memory_sbuf,
-  Core_Memory_pmem,
-  Core_Memory_reg,
+Core_Memory_hbm = 1,
+Core_Memory_sbuf,
+Core_Memory_pmem,
+Core_Memory_reg,
 };
 
 enum Core_Dtype {
-  Core_Dtype_bfloat16 = 1,
-  Core_Dtype_float8e3,
-  Core_Dtype_float8e4,
-  Core_Dtype_float8e5,
-  Core_Dtype_float16,
-  Core_Dtype_float32,
-  Core_Dtype_float32r,
-  Core_Dtype_int8,
-  Core_Dtype_int16,
-  Core_Dtype_int64,
-  Core_Dtype_int32,
-  Core_Dtype_uint8,
-  Core_Dtype_uint16,
-  Core_Dtype_uint32,
-  Core_Dtype_uint64,
+Core_Dtype_bfloat16 = 1,
+Core_Dtype_float8e3,
+Core_Dtype_float8e4,
+Core_Dtype_float8e5,
+Core_Dtype_float16,
+Core_Dtype_float32,
+Core_Dtype_float32r,
+Core_Dtype_int8,
+Core_Dtype_int16,
+Core_Dtype_int64,
+Core_Dtype_int32,
+Core_Dtype_uint8,
+Core_Dtype_uint16,
+Core_Dtype_uint32,
+Core_Dtype_uint64,
 };
 
 struct Core_Shape {
   u32 parDim;
-  struct Nat_List *freeDims;
+  struct Nat_List* freeDims;
 };
 
 struct Core_Address {
@@ -53,10 +53,10 @@ struct Core_Address {
 };
 
 struct Core_TensorName {
-  char *name;
+  char* name;
   enum Core_Dtype dtype;
-  struct Core_Shape *shape;
-  struct Core_Address *address;
+  struct Core_Shape* shape;
+  struct Core_Address* address;
   u32 freeElements;
   struct Prop parWF;
   struct Prop freeWF;
@@ -70,26 +70,26 @@ struct Core_Slice {
 };
 
 enum Core_Index_Tag {
-  Core_Index_coord = 1,
-  Core_Index_slice,
+Core_Index_coord = 1,
+Core_Index_slice,
 };
 struct Core_Index_coord {
   u32 e;
 };
 struct Core_Index_slice {
-  struct Core_Slice *slice;
+  struct Core_Slice* slice;
 };
 struct Core_Index {
-  enum Core_Index_Tag tag;
-  union {
-    struct Core_Index_coord coord;
-    struct Core_Index_slice slice;
-  };
+enum Core_Index_Tag tag;
+union {
+struct Core_Index_coord coord;
+struct Core_Index_slice slice;
+};
 };
 
 struct Core_AccessBasic {
-  struct Core_TensorName *tensor;
-  struct Core_Index_List *indexes;
+  struct Core_TensorName* tensor;
+  struct Core_Index_List* indexes;
   struct Prop lenWF;
 };
 
@@ -99,106 +99,106 @@ struct Core_APPair {
 };
 
 struct Core_AccessPattern {
-  struct Core_TensorName *tensor;
+  struct Core_TensorName* tensor;
   u32 parNum;
-  struct Core_APPair_List *freePattern;
+  struct Core_APPair_List* freePattern;
   u32 offset;
 };
 
 enum Core_Access_Tag {
-  Core_Access_simple = 1,
-  Core_Access_basic,
-  Core_Access_pattern,
+Core_Access_simple = 1,
+Core_Access_basic,
+Core_Access_pattern,
 };
 struct Core_Access_simple {
-  struct Core_TensorName *tensor;
+  struct Core_TensorName* tensor;
 };
 struct Core_Access_basic {
-  struct Core_AccessBasic *access;
+  struct Core_AccessBasic* access;
 };
 struct Core_Access_pattern {
-  struct Core_AccessPattern *access;
+  struct Core_AccessPattern* access;
 };
 struct Core_Access {
-  enum Core_Access_Tag tag;
-  union {
-    struct Core_Access_simple simple;
-    struct Core_Access_basic basic;
-    struct Core_Access_pattern pattern;
-  };
+enum Core_Access_Tag tag;
+union {
+struct Core_Access_simple simple;
+struct Core_Access_basic basic;
+struct Core_Access_pattern pattern;
+};
 };
 
 struct Core_TensorHbm {
-  char *name;
+  char* name;
   enum Core_Dtype dtype;
   u32 address;
-  struct Core_APPair_List *dims;
+  struct Core_APPair_List* dims;
 };
 
 enum Core_ParQuadrant {
-  Core_ParQuadrant_par0 = 1,
-  Core_ParQuadrant_par32,
-  Core_ParQuadrant_par64,
-  Core_ParQuadrant_par96,
+Core_ParQuadrant_par0 = 1,
+Core_ParQuadrant_par32,
+Core_ParQuadrant_par64,
+Core_ParQuadrant_par96,
 };
 
 struct Core_TensorSram {
-  char *name;
+  char* name;
   enum Core_Dtype dtype;
   enum Core_ParQuadrant parQuadrant;
   u32 parDim;
   u32 freeOffset;
-  struct Core_APPair_List *freePattern;
+  struct Core_APPair_List* freePattern;
 };
 
 enum Core_TensorRef_Tag {
-  Core_TensorRef_abstract = 1,
-  Core_TensorRef_sbuf,
-  Core_TensorRef_psum,
-  Core_TensorRef_hbm,
-  Core_TensorRef_register,
+Core_TensorRef_abstract = 1,
+Core_TensorRef_sbuf,
+Core_TensorRef_psum,
+Core_TensorRef_hbm,
+Core_TensorRef_register,
 };
 struct Core_TensorRef_abstract {
-  struct Core_Access *access;
+  struct Core_Access* access;
 };
 struct Core_TensorRef_sbuf {
-  struct Core_TensorSram *view;
+  struct Core_TensorSram* view;
 };
 struct Core_TensorRef_psum {
-  struct Core_TensorSram *view;
+  struct Core_TensorSram* view;
 };
 struct Core_TensorRef_hbm {
-  struct Core_TensorHbm *view;
+  struct Core_TensorHbm* view;
 };
 struct Core_TensorRef_register {
   u32 reg;
 };
 struct Core_TensorRef {
-  enum Core_TensorRef_Tag tag;
-  union {
-    struct Core_TensorRef_abstract abstract;
-    struct Core_TensorRef_sbuf sbuf;
-    struct Core_TensorRef_psum psum;
-    struct Core_TensorRef_hbm hbm;
-    struct Core_TensorRef_register r;
-  };
+enum Core_TensorRef_Tag tag;
+union {
+struct Core_TensorRef_abstract abstract;
+struct Core_TensorRef_sbuf sbuf;
+struct Core_TensorRef_psum psum;
+struct Core_TensorRef_hbm hbm;
+struct Core_TensorRef_register r;
+};
 };
 
 enum Core_Engine {
-  Core_Engine_unassigned = 1,
-  Core_Engine_act,
-  Core_Engine_dma,
-  Core_Engine_dve,
-  Core_Engine_pe,
-  Core_Engine_pool,
-  Core_Engine_sp,
+Core_Engine_unassigned = 1,
+Core_Engine_act,
+Core_Engine_dma,
+Core_Engine_dve,
+Core_Engine_pe,
+Core_Engine_pool,
+Core_Engine_sp,
 };
 
 enum Core_Immediate_Tag {
-  Core_Immediate_register = 1,
-  Core_Immediate_pointer,
-  Core_Immediate_int,
-  Core_Immediate_float,
+Core_Immediate_register = 1,
+Core_Immediate_pointer,
+Core_Immediate_int,
+Core_Immediate_float,
 };
 struct Core_Immediate_register {
   u32 reg;
@@ -210,18 +210,18 @@ struct Core_Immediate_float {
   f32 f;
 };
 struct Core_Immediate {
-  enum Core_Immediate_Tag tag;
-  union {
-    struct Core_Immediate_register r;
-    struct Core_Immediate_int i;
-    struct Core_Immediate_float f;
-  };
+enum Core_Immediate_Tag tag;
+union {
+struct Core_Immediate_register r;
+struct Core_Immediate_int i;
+struct Core_Immediate_float f;
+};
 };
 
 enum Core_ActivationImm_Tag {
-  Core_ActivationImm_register = 1,
-  Core_ActivationImm_pointer,
-  Core_ActivationImm_float,
+Core_ActivationImm_register = 1,
+Core_ActivationImm_pointer,
+Core_ActivationImm_float,
 };
 struct Core_ActivationImm_register {
   u32 reg;
@@ -230,192 +230,268 @@ struct Core_ActivationImm_float {
   f32 f;
 };
 struct Core_ActivationImm {
-  enum Core_ActivationImm_Tag tag;
-  union {
-    struct Core_ActivationImm_register r;
-    struct Core_ActivationImm_float f;
-  };
+enum Core_ActivationImm_Tag tag;
+union {
+struct Core_ActivationImm_register r;
+struct Core_ActivationImm_float f;
+};
+};
+
+enum Core_Scale_Tag {
+Core_Scale_imm = 1,
+Core_Scale_tensor,
+};
+struct Core_Scale_imm {
+  struct Core_Immediate* i;
+};
+struct Core_Scale_tensor {
+  struct Core_TensorRef* t;
+};
+struct Core_Scale {
+enum Core_Scale_Tag tag;
+union {
+struct Core_Scale_imm imm;
+struct Core_Scale_tensor tensor;
+};
+};
+
+enum Core_Scale_Tag {
+Core_Scale_imm = 1,
+Core_Scale_tensor,
+};
+struct Core_Scale_imm {
+  struct Core_Immediate* i;
+};
+struct Core_Scale_tensor {
+  struct Core_TensorRef* t;
+};
+struct Core_Scale {
+enum Core_Scale_Tag tag;
+union {
+struct Core_Scale_imm imm;
+struct Core_Scale_tensor tensor;
+};
+};
+
+enum Core_Axis_Tag {
+Core_Axis_ax = 1,
+Core_Axis_axs,
+};
+struct Core_Axis_ax {
+  i32 ax;
+};
+struct Core_Axis_axs {
+  struct Int_List* axs;
+};
+struct Core_Axis {
+enum Core_Axis_Tag tag;
+union {
+struct Core_Axis_ax ax;
+struct Core_Axis_axs axs;
+};
+};
+
+enum Core_Operand_Tag {
+Core_Operand_imm = 1,
+Core_Operand_tile,
+};
+struct Core_Operand_imm {
+  struct Core_Immediate* i;
+};
+struct Core_Operand_tile {
+  struct Core_TensorRef* t;
+};
+struct Core_Operand {
+enum Core_Operand_Tag tag;
+union {
+struct Core_Operand_imm imm;
+struct Core_Operand_tile tile;
+};
 };
 
 struct Core_DataPattern {
   u32 offset;
-  struct Core_APPair_List *pattern;
+  struct Core_APPair_List* pattern;
 };
 
 enum Core_AluOp {
-  Core_AluOp_abs = 1,
-  Core_AluOp_add,
-  Core_AluOp_arith_shift_left,
-  Core_AluOp_arith_shift_right,
-  Core_AluOp_average,
-  Core_AluOp_bitwise_and,
-  Core_AluOp_bitwise_not,
-  Core_AluOp_bitwise_or,
-  Core_AluOp_bitwise_xor,
-  Core_AluOp_bypass,
-  Core_AluOp_divide,
-  Core_AluOp_is_equal,
-  Core_AluOp_is_ge,
-  Core_AluOp_is_gt,
-  Core_AluOp_is_le,
-  Core_AluOp_is_lt,
-  Core_AluOp_logical_and,
-  Core_AluOp_logical_or,
-  Core_AluOp_logical_shift_left,
-  Core_AluOp_logical_shift_right,
-  Core_AluOp_logical_xor,
-  Core_AluOp_max,
-  Core_AluOp_min,
-  Core_AluOp_mod,
-  Core_AluOp_mult,
-  Core_AluOp_not_equal,
-  Core_AluOp_pow,
-  Core_AluOp_rsqrt,
-  Core_AluOp_subtract,
+Core_AluOp_abs = 1,
+Core_AluOp_add,
+Core_AluOp_arith_shift_left,
+Core_AluOp_arith_shift_right,
+Core_AluOp_average,
+Core_AluOp_bitwise_and,
+Core_AluOp_bitwise_not,
+Core_AluOp_bitwise_or,
+Core_AluOp_bitwise_xor,
+Core_AluOp_bypass,
+Core_AluOp_divide,
+Core_AluOp_is_equal,
+Core_AluOp_is_ge,
+Core_AluOp_is_gt,
+Core_AluOp_is_le,
+Core_AluOp_is_lt,
+Core_AluOp_logical_and,
+Core_AluOp_logical_or,
+Core_AluOp_logical_shift_left,
+Core_AluOp_logical_shift_right,
+Core_AluOp_logical_xor,
+Core_AluOp_max,
+Core_AluOp_min,
+Core_AluOp_mod,
+Core_AluOp_mult,
+Core_AluOp_not_equal,
+Core_AluOp_pow,
+Core_AluOp_rsqrt,
+Core_AluOp_subtract,
 };
 
 enum Core_DropoutThresholdType {
-  Core_DropoutThresholdType_DropRate = 1,
-  Core_DropoutThresholdType_KeepRate,
+Core_DropoutThresholdType_DropRate = 1,
+Core_DropoutThresholdType_KeepRate,
 };
 
 enum Core_AccumCmd {
-  Core_AccumCmd_Idle = 1,
-  Core_AccumCmd_Zero,
-  Core_AccumCmd_Accumulate,
-  Core_AccumCmd_ZeroAccumulate,
-  Core_AccumCmd_LoadAccumulate,
+Core_AccumCmd_Idle = 1,
+Core_AccumCmd_Zero,
+Core_AccumCmd_Accumulate,
+Core_AccumCmd_ZeroAccumulate,
+Core_AccumCmd_LoadAccumulate,
 };
 
 enum Core_ActivationFunc {
-  Core_ActivationFunc_abs = 1,
-  Core_ActivationFunc_arctan,
-  Core_ActivationFunc_copy,
-  Core_ActivationFunc_erf,
-  Core_ActivationFunc_erf_dx,
-  Core_ActivationFunc_exp,
-  Core_ActivationFunc_gelu,
-  Core_ActivationFunc_gelu_apprx_tanh,
-  Core_ActivationFunc_gelu_dx,
-  Core_ActivationFunc_log,
-  Core_ActivationFunc_mish,
-  Core_ActivationFunc_reciprocal,
-  Core_ActivationFunc_relu,
-  Core_ActivationFunc_rsqrt,
-  Core_ActivationFunc_sigmoid,
-  Core_ActivationFunc_sign,
-  Core_ActivationFunc_silu,
-  Core_ActivationFunc_silu_dx,
-  Core_ActivationFunc_sin,
-  Core_ActivationFunc_softplus,
-  Core_ActivationFunc_sqrt,
-  Core_ActivationFunc_square,
-  Core_ActivationFunc_tanh,
+Core_ActivationFunc_abs = 1,
+Core_ActivationFunc_arctan,
+Core_ActivationFunc_copy,
+Core_ActivationFunc_erf,
+Core_ActivationFunc_erf_dx,
+Core_ActivationFunc_exp,
+Core_ActivationFunc_gelu,
+Core_ActivationFunc_gelu_apprx_tanh,
+Core_ActivationFunc_gelu_dx,
+Core_ActivationFunc_log,
+Core_ActivationFunc_mish,
+Core_ActivationFunc_reciprocal,
+Core_ActivationFunc_relu,
+Core_ActivationFunc_rsqrt,
+Core_ActivationFunc_sigmoid,
+Core_ActivationFunc_sign,
+Core_ActivationFunc_silu,
+Core_ActivationFunc_silu_dx,
+Core_ActivationFunc_sin,
+Core_ActivationFunc_softplus,
+Core_ActivationFunc_sqrt,
+Core_ActivationFunc_square,
+Core_ActivationFunc_tanh,
 };
 
 enum Core_AffineSelectCmp {
-  Core_AffineSelectCmp_GreaterThan = 1,
-  Core_AffineSelectCmp_GreaterThanEq,
-  Core_AffineSelectCmp_Eq,
-  Core_AffineSelectCmp_NotEq,
+Core_AffineSelectCmp_GreaterThan = 1,
+Core_AffineSelectCmp_GreaterThanEq,
+Core_AffineSelectCmp_Eq,
+Core_AffineSelectCmp_NotEq,
 };
 
 enum Core_DgeComputeOp {
-  Core_DgeComputeOp_none = 1,
-  Core_DgeComputeOp_add,
+Core_DgeComputeOp_none = 1,
+Core_DgeComputeOp_add,
 };
 
 enum Core_DmaBounds_Tag {
-  Core_DmaBounds_disable = 1,
-  Core_DmaBounds_enable,
-  Core_DmaBounds_reg,
+Core_DmaBounds_disable = 1,
+Core_DmaBounds_enable,
+Core_DmaBounds_reg,
 };
 struct Core_DmaBounds_reg {
   u32 reg;
 };
 struct Core_DmaBounds {
-  enum Core_DmaBounds_Tag tag;
-  union {
-    struct Core_DmaBounds_reg reg;
-  };
+enum Core_DmaBounds_Tag tag;
+union {
+struct Core_DmaBounds_reg reg;
+};
 };
 
 enum Core_MatmulGroupElement {
-  Core_MatmulGroupElement_first = 1,
-  Core_MatmulGroupElement_middle,
-  Core_MatmulGroupElement_last,
-  Core_MatmulGroupElement_whole,
+Core_MatmulGroupElement_first = 1,
+Core_MatmulGroupElement_middle,
+Core_MatmulGroupElement_last,
+Core_MatmulGroupElement_whole,
 };
 
 enum Core_IndexMissBehavior_Tag {
-  Core_IndexMissBehavior_imm = 1,
-  Core_IndexMissBehavior_skip,
+Core_IndexMissBehavior_imm = 1,
+Core_IndexMissBehavior_skip,
 };
 struct Core_IndexMissBehavior_imm {
-  struct Core_Immediate *value;
+  struct Core_Immediate* value;
 };
 struct Core_IndexMissBehavior {
-  enum Core_IndexMissBehavior_Tag tag;
-  union {
-    struct Core_IndexMissBehavior_imm imm;
-  };
+enum Core_IndexMissBehavior_Tag tag;
+union {
+struct Core_IndexMissBehavior_imm imm;
+};
 };
 
 enum Core_TensorScalarReverseOps {
-  Core_TensorScalarReverseOps_none = 1,
-  Core_TensorScalarReverseOps_first,
-  Core_TensorScalarReverseOps_second,
-  Core_TensorScalarReverseOps_both,
+Core_TensorScalarReverseOps_none = 1,
+Core_TensorScalarReverseOps_first,
+Core_TensorScalarReverseOps_second,
+Core_TensorScalarReverseOps_both,
 };
 
 enum Core_TensorSubDim {
-  Core_TensorSubDim_X = 1,
-  Core_TensorSubDim_XY,
-  Core_TensorSubDim_XYZ,
-  Core_TensorSubDim_XYZW,
+Core_TensorSubDim_X = 1,
+Core_TensorSubDim_XY,
+Core_TensorSubDim_XYZ,
+Core_TensorSubDim_XYZW,
 };
 
 struct Core_Dropout {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
   enum Core_DropoutThresholdType thresholdType;
-  struct Core_Immediate *threshold;
+  struct Core_Operand* threshold;
+  enum Core_Dtype dtype;
 };
 
 struct Core_Activate {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
   enum Core_AccumCmd accumulatorCmd;
   enum Core_ActivationFunc activationFunc;
-  struct Core_Immediate *scale;
-  struct Core_Immediate *bias;
-  struct Core_Immediate *imm;
+  struct Core_Immediate* scale;
+  struct Core_Immediate* bias;
+  enum Core_AluOp reduceOp;
+  struct Core_TensorRef* reduceRes;
 };
 
 struct Core_AffineSelect {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
-  enum Core_AffineSelectCmp fillMode;
-  u32 fillReg;
-  struct Core_DataPattern *maskPattern;
+  struct Core_TensorRef* dst;
+  struct Core_DataPattern* pred;
+  struct Core_TensorRef* onTrueTile;
+  struct Core_Immediate* onFalseValue;
+  enum Core_Dtype dtype;
 };
 
 struct Core_DmaCopy {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
   enum Core_DgeComputeOp compute_op;
-  struct Core_DmaBounds *dstBoundsCheck;
-  struct Core_DmaBounds *srcBoundsCheck;
+  struct Core_DmaBounds* oobMode;
+  u32 dgeMode;
 };
 
 struct Core_DmaTranspose {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
 };
 
 struct Core_Transpose {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  enum Core_Dtype dtype;
+  enum Core_Engine engine;
 };
 
 struct Core_LoadMaskRegister {
@@ -423,319 +499,389 @@ struct Core_LoadMaskRegister {
 };
 
 struct Core_Shuffle {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  struct Core_Immediate_List* shuffleMask;
+  enum Core_Dtype dtype;
 };
 
 struct Core_MemSet {
-  struct Core_TensorRef *dst;
-  struct Core_Immediate *value;
+  struct Core_TensorRef* dst;
+  struct Core_Immediate* value;
   u32 count;
+  enum Core_Dtype dtype;
+  enum Core_Engine engine;
 };
 
 struct Core_Iota {
-  struct Core_TensorRef *dst;
-  struct Core_DataPattern *pattern;
+  struct Core_TensorRef* dst;
+  struct Core_DataPattern* pattern;
+  enum Core_Dtype dtype;
 };
 
 struct Core_LoadStationary {
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* src;
   bool isTranspose;
 };
 
 struct Core_MatMul {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *moving;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* moving;
   enum Core_MatmulGroupElement psumAccumulateFlag;
 };
 
 struct Core_LocalGather {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
-  struct Core_IndexMissBehavior *indexMissBehavior;
-  bool freePoolBuffer;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  struct Core_TensorRef* index;
+  struct Core_Immediate* numElemPerIdx;
+  struct Core_Immediate* numValidIndicies;
 };
 
 struct Core_RangeSelect {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
   enum Core_AccumCmd reduceCommand;
+  struct Core_TensorRef* reduceRes;
   enum Core_AluOp reduceOp;
-  f32 base;
-  f32 fillValue;
   enum Core_AluOp compOp0;
   enum Core_AluOp compOp1;
-  struct Core_Immediate *bound0;
-  struct Core_Immediate *bound1;
+  struct Core_TensorRef* bound0;
+  struct Core_TensorRef* bound1;
+  struct Core_Immediate* rangeStart;
+  struct Core_TensorRef* onTrueTile;
+  struct Core_Immediate* onFalseValue;
+  enum Core_Dtype dtype;
 };
 
 struct Core_ScalarTensorTensor {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src0;
-  struct Core_TensorRef *src1;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* data;
+  struct Core_Operand* src0;
+  struct Core_Operand* src1;
   enum Core_AluOp op0;
   enum Core_AluOp op1;
   enum Core_TensorScalarReverseOps reverseOperands;
-  struct Core_Immediate *imm0;
-  enum Core_AccumCmd accumulatorCmd;
+  enum Core_Dtype dtype;
 };
 
 struct Core_CopyPredicated {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
-  struct Core_TensorRef *predicate;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  struct Core_TensorRef* predicate;
+  enum Core_Dtype dtype;
+  bool reversePred;
 };
 
 struct Core_TensorTensorScan {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src0;
-  struct Core_TensorRef *src1;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src0;
+  struct Core_TensorRef* src1;
   enum Core_AluOp op0;
   enum Core_AluOp op1;
   enum Core_TensorScalarReverseOps reverseOperands;
-  struct Core_Immediate *imm0;
-  enum Core_AccumCmd accumulatorCmd;
+  struct Core_Operand* initial;
+  enum Core_Dtype dtype;
 };
 
 struct Core_MatchValueLoad {
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* src;
 };
 
 struct Core_FindIndex8 {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  struct Core_TensorRef* vals;
+  enum Core_Dtype dtype;
 };
 
 struct Core_MatchReplace8 {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
-  struct Core_Immediate *replaceValue;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  struct Core_TensorRef* vals;
+  struct Core_Immediate* replaceValue;
+  struct Core_TensorRef* dstIdx;
+  enum Core_Dtype dtype;
 };
 
 struct Core_Max8 {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  enum Core_Dtype dtype;
 };
 
 struct Core_BatchNormAggregate {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  enum Core_Dtype dtype;
 };
 
 struct Core_BatchNormStats {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  enum Core_Dtype dtype;
 };
 
 struct Core_Reciprocal {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  enum Core_Dtype dtype;
 };
 
 struct Core_Copy {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
-  enum Core_TensorSubDim opDim;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  enum Core_Dtype dtype;
+  enum Core_Engine engine;
 };
 
 struct Core_TensorReduce {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
   enum Core_AluOp op;
-  enum Core_TensorSubDim opDim;
+  struct Core_Axis* axis;
   bool negated;
+  enum Core_Dtype dtype;
+  bool keepdims;
 };
 
 struct Core_TensorScalar {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src;
-  struct Core_Immediate *imm0;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  struct Core_Operand* operand0;
   enum Core_AluOp op0;
-  struct Core_Immediate *imm1;
+  struct Core_Operand* operand1;
   enum Core_AluOp op1;
   enum Core_TensorScalarReverseOps reverse;
+  enum Core_Engine engine;
+  enum Core_Dtype dtype;
 };
 
 struct Core_TensorTensor {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *src0;
-  struct Core_TensorRef *src1;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src0;
+  struct Core_TensorRef* src1;
   enum Core_AluOp op;
+  enum Core_Dtype dtype;
+  enum Core_Engine engine;
 };
 
 struct Core_NcMatMul {
-  struct Core_TensorRef *dst;
-  struct Core_TensorRef *stationary;
-  struct Core_TensorRef *moving;
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* stationary;
+  struct Core_TensorRef* moving;
   bool isStationaryOneZero;
   bool isMovingZero;
   bool isTranspose;
-  struct Nat_List *tilePosition;
-  struct Nat_List *tileSize;
+  struct Nat_List* tilePosition;
+  struct Nat_List* tileSize;
 };
 
-enum Core_Operator_Tag {
-  Core_Operator_activate = 1,
-  Core_Operator_affineSelect,
-  Core_Operator_batchNormAggregate,
-  Core_Operator_batchNormStats,
-  Core_Operator_copy,
-  Core_Operator_copyPredicated,
-  Core_Operator_dmaCopy,
-  Core_Operator_dmaTranspose,
-  Core_Operator_dropout,
-  Core_Operator_findIndex8,
-  Core_Operator_iota,
-  Core_Operator_loadMaskRegister,
-  Core_Operator_loadStationary,
-  Core_Operator_localGather,
-  Core_Operator_matMul,
-  Core_Operator_matchReplace8,
-  Core_Operator_matchValueLoad,
-  Core_Operator_max8,
-  Core_Operator_memSet,
-  Core_Operator_rangeSelect,
-  Core_Operator_reciprocal,
-  Core_Operator_scalarTensorTensor,
-  Core_Operator_shuffle,
-  Core_Operator_tensorReduce,
-  Core_Operator_tensorScalar,
-  Core_Operator_tensorTensor,
-  Core_Operator_tensorTensorScan,
-  Core_Operator_transpose,
-  Core_Operator_ncMatMul,
+enum Core_NKIOperator_Tag {
+Core_NKIOperator_activate = 1,
+Core_NKIOperator_affineSelect,
+Core_NKIOperator_batchNormAggregate,
+Core_NKIOperator_batchNormStats,
+Core_NKIOperator_copy,
+Core_NKIOperator_copyPredicated,
+Core_NKIOperator_dmaCopy,
+Core_NKIOperator_dmaTranspose,
+Core_NKIOperator_dropout,
+Core_NKIOperator_findIndex8,
+Core_NKIOperator_iota,
+Core_NKIOperator_loadMaskRegister,
+Core_NKIOperator_loadStationary,
+Core_NKIOperator_localGather,
+Core_NKIOperator_matMul,
+Core_NKIOperator_matchReplace8,
+Core_NKIOperator_matchValueLoad,
+Core_NKIOperator_max8,
+Core_NKIOperator_memSet,
+Core_NKIOperator_rangeSelect,
+Core_NKIOperator_reciprocal,
+Core_NKIOperator_scalarTensorTensor,
+Core_NKIOperator_shuffle,
+Core_NKIOperator_tensorReduce,
+Core_NKIOperator_tensorScalar,
+Core_NKIOperator_tensorScalarReduce,
+Core_NKIOperator_tensorTensor,
+Core_NKIOperator_tensorTensorScan,
+Core_NKIOperator_transpose,
+Core_NKIOperator_ncMatMul,
+Core_NKIOperator_activationReduce,
+Core_NKIOperator_tensorPartitionReduce,
 };
-struct Core_Operator_activate {
-  struct Core_Activate *op;
+struct Core_NKIOperator_activate {
+  struct Core_Activate* op;
 };
-struct Core_Operator_affineSelect {
-  struct Core_AffineSelect *op;
+struct Core_NKIOperator_affineSelect {
+  struct Core_AffineSelect* op;
 };
-struct Core_Operator_batchNormAggregate {
-  struct Core_BatchNormAggregate *op;
+struct Core_NKIOperator_batchNormAggregate {
+  struct Core_BatchNormAggregate* op;
 };
-struct Core_Operator_batchNormStats {
-  struct Core_BatchNormStats *op;
+struct Core_NKIOperator_batchNormStats {
+  struct Core_BatchNormStats* op;
 };
-struct Core_Operator_copy {
-  struct Core_Copy *op;
+struct Core_NKIOperator_copy {
+  struct Core_Copy* op;
 };
-struct Core_Operator_copyPredicated {
-  struct Core_CopyPredicated *op;
+struct Core_NKIOperator_copyPredicated {
+  struct Core_CopyPredicated* op;
 };
-struct Core_Operator_dmaCopy {
-  struct Core_DmaCopy *op;
+struct Core_NKIOperator_dmaCopy {
+  struct Core_DmaCopy* op;
 };
-struct Core_Operator_dmaTranspose {
-  struct Core_DmaTranspose *op;
+struct Core_NKIOperator_dmaTranspose {
+  struct Core_DmaTranspose* op;
 };
-struct Core_Operator_dropout {
-  struct Core_Dropout *op;
+struct Core_NKIOperator_dropout {
+  struct Core_Dropout* op;
 };
-struct Core_Operator_findIndex8 {
-  struct Core_FindIndex8 *op;
+struct Core_NKIOperator_findIndex8 {
+  struct Core_FindIndex8* op;
 };
-struct Core_Operator_iota {
-  struct Core_Iota *op;
+struct Core_NKIOperator_iota {
+  struct Core_Iota* op;
 };
-struct Core_Operator_loadMaskRegister {
-  struct Core_LoadMaskRegister *op;
+struct Core_NKIOperator_loadMaskRegister {
+  struct Core_LoadMaskRegister* op;
 };
-struct Core_Operator_loadStationary {
-  struct Core_LoadStationary *op;
+struct Core_NKIOperator_loadStationary {
+  struct Core_LoadStationary* op;
 };
-struct Core_Operator_localGather {
-  struct Core_LocalGather *op;
+struct Core_NKIOperator_localGather {
+  struct Core_LocalGather* op;
 };
-struct Core_Operator_matMul {
-  struct Core_MatMul *op;
+struct Core_NKIOperator_matMul {
+  struct Core_MatMul* op;
 };
-struct Core_Operator_matchReplace8 {
-  struct Core_MatchReplace8 *op;
+struct Core_NKIOperator_matchReplace8 {
+  struct Core_MatchReplace8* op;
 };
-struct Core_Operator_matchValueLoad {
-  struct Core_MatchValueLoad *op;
+struct Core_NKIOperator_matchValueLoad {
+  struct Core_MatchValueLoad* op;
 };
-struct Core_Operator_max8 {
-  struct Core_Max8 *op;
+struct Core_NKIOperator_max8 {
+  struct Core_Max8* op;
 };
-struct Core_Operator_memSet {
-  struct Core_MemSet *op;
+struct Core_NKIOperator_memSet {
+  struct Core_MemSet* op;
 };
-struct Core_Operator_rangeSelect {
-  struct Core_RangeSelect *op;
+struct Core_NKIOperator_rangeSelect {
+  struct Core_RangeSelect* op;
 };
-struct Core_Operator_reciprocal {
-  struct Core_Reciprocal *op;
+struct Core_NKIOperator_reciprocal {
+  struct Core_Reciprocal* op;
 };
-struct Core_Operator_scalarTensorTensor {
-  struct Core_ScalarTensorTensor *op;
+struct Core_NKIOperator_scalarTensorTensor {
+  struct Core_ScalarTensorTensor* op;
 };
-struct Core_Operator_shuffle {
-  struct Core_Shuffle *op;
+struct Core_NKIOperator_shuffle {
+  struct Core_Shuffle* op;
 };
-struct Core_Operator_tensorReduce {
-  struct Core_TensorReduce *op;
+struct Core_NKIOperator_tensorReduce {
+  struct Core_TensorReduce* op;
 };
-struct Core_Operator_tensorScalar {
-  struct Core_TensorScalar *op;
+struct Core_NKIOperator_tensorScalar {
+  struct Core_TensorScalar* op;
 };
-struct Core_Operator_tensorTensor {
-  struct Core_TensorTensor *op;
+struct Core_NKIOperator_tensorScalarReduce {
+  struct Core_TensorScalarReduce* op;
 };
-struct Core_Operator_tensorTensorScan {
-  struct Core_TensorTensorScan *op;
+struct Core_NKIOperator_tensorTensor {
+  struct Core_TensorTensor* op;
 };
-struct Core_Operator_transpose {
-  struct Core_Transpose *op;
+struct Core_NKIOperator_tensorTensorScan {
+  struct Core_TensorTensorScan* op;
 };
-struct Core_Operator_ncMatMul {
-  struct Core_NcMatMul *op;
+struct Core_NKIOperator_transpose {
+  struct Core_Transpose* op;
 };
-struct Core_Operator {
-  enum Core_Operator_Tag tag;
-  union {
-    struct Core_Operator_activate activate;
-    struct Core_Operator_affineSelect affineSelect;
-    struct Core_Operator_batchNormAggregate batchNormAggregate;
-    struct Core_Operator_batchNormStats batchNormStats;
-    struct Core_Operator_copy copy;
-    struct Core_Operator_copyPredicated copyPredicated;
-    struct Core_Operator_dmaCopy dmaCopy;
-    struct Core_Operator_dmaTranspose dmaTranspose;
-    struct Core_Operator_dropout dropout;
-    struct Core_Operator_findIndex8 findIndex8;
-    struct Core_Operator_iota iota;
-    struct Core_Operator_loadMaskRegister loadMaskRegister;
-    struct Core_Operator_loadStationary loadStationary;
-    struct Core_Operator_localGather localGather;
-    struct Core_Operator_matMul matMul;
-    struct Core_Operator_matchReplace8 matchReplace8;
-    struct Core_Operator_matchValueLoad matchValueLoad;
-    struct Core_Operator_max8 max8;
-    struct Core_Operator_memSet memSet;
-    struct Core_Operator_rangeSelect rangeSelect;
-    struct Core_Operator_reciprocal reciprocal;
-    struct Core_Operator_scalarTensorTensor scalarTensorTensor;
-    struct Core_Operator_shuffle shuffle;
-    struct Core_Operator_tensorReduce tensorReduce;
-    struct Core_Operator_tensorScalar tensorScalar;
-    struct Core_Operator_tensorTensor tensorTensor;
-    struct Core_Operator_tensorTensorScan tensorTensorScan;
-    struct Core_Operator_transpose transpose;
-    struct Core_Operator_ncMatMul ncMatMul;
-  };
+struct Core_NKIOperator_ncMatMul {
+  struct Core_NcMatMul* op;
+};
+struct Core_NKIOperator_activationReduce {
+  struct Core_ActivationReduce* op;
+};
+struct Core_NKIOperator_tensorPartitionReduce {
+  struct Core_TensorPartitionReduce* op;
+};
+struct Core_NKIOperator {
+enum Core_NKIOperator_Tag tag;
+union {
+struct Core_NKIOperator_activate activate;
+struct Core_NKIOperator_affineSelect affineSelect;
+struct Core_NKIOperator_batchNormAggregate batchNormAggregate;
+struct Core_NKIOperator_batchNormStats batchNormStats;
+struct Core_NKIOperator_copy copy;
+struct Core_NKIOperator_copyPredicated copyPredicated;
+struct Core_NKIOperator_dmaCopy dmaCopy;
+struct Core_NKIOperator_dmaTranspose dmaTranspose;
+struct Core_NKIOperator_dropout dropout;
+struct Core_NKIOperator_findIndex8 findIndex8;
+struct Core_NKIOperator_iota iota;
+struct Core_NKIOperator_loadMaskRegister loadMaskRegister;
+struct Core_NKIOperator_loadStationary loadStationary;
+struct Core_NKIOperator_localGather localGather;
+struct Core_NKIOperator_matMul matMul;
+struct Core_NKIOperator_matchReplace8 matchReplace8;
+struct Core_NKIOperator_matchValueLoad matchValueLoad;
+struct Core_NKIOperator_max8 max8;
+struct Core_NKIOperator_memSet memSet;
+struct Core_NKIOperator_rangeSelect rangeSelect;
+struct Core_NKIOperator_reciprocal reciprocal;
+struct Core_NKIOperator_scalarTensorTensor scalarTensorTensor;
+struct Core_NKIOperator_shuffle shuffle;
+struct Core_NKIOperator_tensorReduce tensorReduce;
+struct Core_NKIOperator_tensorScalar tensorScalar;
+struct Core_NKIOperator_tensorScalarReduce tensorScalarReduce;
+struct Core_NKIOperator_tensorTensor tensorTensor;
+struct Core_NKIOperator_tensorTensorScan tensorTensorScan;
+struct Core_NKIOperator_transpose transpose;
+struct Core_NKIOperator_ncMatMul ncMatMul;
+struct Core_NKIOperator_activationReduce activationReduce;
+struct Core_NKIOperator_tensorPartitionReduce tensorPartitionReduce;
+};
+};
+
+struct Core_TensorScalarReduce {
+  struct Core_TensorRef* dst;
+  struct Core_TensorRef* src;
+  struct Core_Operand* operand0;
+  enum Core_AluOp op0;
+  bool reverse0;
+  enum Core_Dtype dtype;
+  enum Core_AluOp reduceOp;
+  struct Core_TensorRef* reduceRes;
+};
+
+struct Core_ActivationReduce {
+  struct Core_TensorRef* dst;
+  enum Core_ActivationFunc op;
+  struct Core_TensorRef* data;
+  enum Core_AluOp reduceOp;
+  struct Core_TensorRef* reduceRes;
+  struct Core_Immediate_List* bias;
+  struct Core_Scale* scale;
+  enum Core_Dtype dtype;
+};
+
+struct Core_TensorPartitionReduce {
+  struct Core_TensorRef* dst;
+  enum Core_AluOp op;
+  struct Core_TensorRef* data;
+  enum Core_Dtype dtype;
 };
 
 enum Core_Value_Tag {
-  Core_Value_var = 1,
-  Core_Value_bool,
-  Core_Value_int,
-  Core_Value_float,
-  Core_Value_access,
+Core_Value_var = 1,
+Core_Value_bool,
+Core_Value_int,
+Core_Value_float,
+Core_Value_access,
 };
 struct Core_Value_var {
-  char *x;
+  char* x;
 };
 struct Core_Value_bool {
   bool value;
@@ -747,108 +893,136 @@ struct Core_Value_float {
   f32 value;
 };
 struct Core_Value_access {
-  struct Core_Access *a;
+  struct Core_Access* a;
 };
 struct Core_Value {
-  enum Core_Value_Tag tag;
-  union {
-    struct Core_Value_var var;
-    struct Core_Value_bool b;
-    struct Core_Value_int i;
-    struct Core_Value_float f;
-    struct Core_Value_access access;
-  };
+enum Core_Value_Tag tag;
+union {
+struct Core_Value_var var;
+struct Core_Value_bool b;
+struct Core_Value_int i;
+struct Core_Value_float f;
+struct Core_Value_access access;
+};
 };
 
 struct Core_Keyword {
-  char *name;
-  struct Core_Value *value;
+  char* name;
+  struct Core_Value* value;
 };
 
 enum Core_Expr_Tag {
-  Core_Expr_value = 1,
-  Core_Expr_call,
+Core_Expr_value = 1,
+Core_Expr_call,
 };
 struct Core_Expr_value {
-  struct Core_Value *v;
+  struct Core_Value* v;
 };
 struct Core_Expr_call {
-  char *f;
-  struct Core_Value_List *args;
-  struct Core_Keyword_List *kwargs;
+  char* f;
+  struct Core_Value_List* args;
+  struct Core_Keyword_List* kwargs;
 };
 struct Core_Expr {
-  enum Core_Expr_Tag tag;
-  union {
-    struct Core_Expr_value value;
-    struct Core_Expr_call call;
-  };
+enum Core_Expr_Tag tag;
+union {
+struct Core_Expr_value value;
+struct Core_Expr_call call;
+};
 };
 
 enum Core_Stmt_Tag {
-  Core_Stmt_ret = 1,
-  Core_Stmt_assign,
-  Core_Stmt_store,
-  Core_Stmt_oper,
+Core_Stmt_ret = 1,
+Core_Stmt_assign,
+Core_Stmt_store,
+Core_Stmt_oper,
 };
 struct Core_Stmt_ret {
-  struct Core_Value *v;
+  struct Core_Value* v;
 };
 struct Core_Stmt_assign {
-  char *x;
-  struct Core_Expr *e;
+  char* x;
+  struct Core_Expr* e;
 };
 struct Core_Stmt_store {
-  struct Core_Access *dst;
-  struct Core_Operator *op;
-  struct Core_Value_List *args;
+  struct Core_Access* dst;
+  struct Core_NKIOperator* op;
+  struct Core_Value_List* args;
 };
 struct Core_Stmt_oper {
-  struct Core_Operator *op;
+  struct Core_NKIOperator* op;
 };
 struct Core_Stmt {
-  enum Core_Stmt_Tag tag;
-  union {
-    struct Core_Stmt_ret ret;
-    struct Core_Stmt_assign assign;
-    struct Core_Stmt_store store;
-    struct Core_Stmt_oper oper;
-  };
+enum Core_Stmt_Tag tag;
+union {
+struct Core_Stmt_ret ret;
+struct Core_Stmt_assign assign;
+struct Core_Stmt_store store;
+struct Core_Stmt_oper oper;
+};
 };
 
 struct Core_Kernel {
-  char *name;
-  struct Core_TensorName_List *inputs;
-  struct Core_TensorName_List *outputs;
-  struct Core_Stmt_List *body;
+  char* name;
+  struct Core_TensorName_List* inputs;
+  struct Core_TensorName_List* outputs;
+  struct Core_Stmt_List* body;
+};
+
+enum Core_Operand_Tag {
+Core_Operand_imm = 1,
+Core_Operand_tile,
+};
+struct Core_Operand_imm {
+  struct Core_Immediate* i;
+};
+struct Core_Operand_tile {
+  struct Core_TensorRef* t;
+};
+struct Core_Operand {
+enum Core_Operand_Tag tag;
+union {
+struct Core_Operand_imm imm;
+struct Core_Operand_tile tile;
+};
 };
 
 struct Core_Index_List {
-  struct Core_Index_List *next;
-  struct Core_Index *index;
+  struct Core_Index_List* next;
+  struct Core_Index* index;
 };
 
 struct Core_APPair_List {
-  struct Core_APPair_List *next;
-  struct Core_APPair *appair;
+  struct Core_APPair_List* next;
+  struct Core_APPair* appair;
 };
 
+
+
+
+struct Core_Immediate_List {
+  struct Core_Immediate_List* next;
+  struct Core_Immediate* immediate;
+};
+
+
+
 struct Core_Value_List {
-  struct Core_Value_List *next;
-  struct Core_Value *value;
+  struct Core_Value_List* next;
+  struct Core_Value* value;
 };
 
 struct Core_Keyword_List {
-  struct Core_Keyword_List *next;
-  struct Core_Keyword *keyword;
+  struct Core_Keyword_List* next;
+  struct Core_Keyword* keyword;
 };
 
 struct Core_TensorName_List {
-  struct Core_TensorName_List *next;
-  struct Core_TensorName *tensorname;
+  struct Core_TensorName_List* next;
+  struct Core_TensorName* tensorname;
 };
 
 struct Core_Stmt_List {
-  struct Core_Stmt_List *next;
-  struct Core_Stmt *stmt;
+  struct Core_Stmt_List* next;
+  struct Core_Stmt* stmt;
 };

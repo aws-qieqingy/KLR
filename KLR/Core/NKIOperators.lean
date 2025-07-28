@@ -64,7 +64,7 @@ inductive Axis where
   | axs (axs : List Int)
   deriving BEq, FromCBOR, FromJson, FromSexp, Repr, ToCBOR, ToJson, ToSexp
 
-@[serde tag = 179]
+@[serde tag = 180]
 inductive Operand where
   | imm (i : Immediate)
   | tile (t : TensorRef)

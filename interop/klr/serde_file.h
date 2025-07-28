@@ -13,13 +13,10 @@ Authors: Paul Govereau, Sean McLaughlin
 #include "ast_file.h"
 #include "serde_common.h"
 
-bool Serde_KLRFile_ser(FILE *out, struct Serde_KLRFile *x);
-bool Serde_KLRMetaData_ser(FILE *out, struct Serde_KLRMetaData *x);
-bool File_Contents_ser(FILE *out, struct File_Contents *x);
+bool Serde_KLRFile_ser(FILE *out, struct Serde_KLRFile* x);
+bool Serde_KLRMetaData_ser(FILE *out, struct Serde_KLRMetaData* x);
+bool File_Contents_ser(FILE *out, struct File_Contents* x);
 
-bool Serde_KLRFile_des(FILE *in, struct region *region,
-                       struct Serde_KLRFile **x);
-bool Serde_KLRMetaData_des(FILE *in, struct region *region,
-                           struct Serde_KLRMetaData **x);
-bool File_Contents_des(FILE *in, struct region *region,
-                       struct File_Contents **x);
+bool Serde_KLRFile_des(FILE *in, struct region *region, struct Serde_KLRFile** x);
+bool Serde_KLRMetaData_des(FILE *in, struct region *region, struct Serde_KLRMetaData** x);
+bool File_Contents_des(FILE *in, struct region *region, struct File_Contents** x);

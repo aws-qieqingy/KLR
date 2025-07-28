@@ -13,25 +13,25 @@ Authors: Paul Govereau, Sean McLaughlin
 #include "ast_nki.h"
 
 #include <Python.h>
-PyObject *NKI_Value_topy(struct NKI_Value *x);
-PyObject *NKI_BinOp_topy(enum NKI_BinOp x);
-PyObject *NKI_Expr__topy(struct NKI_Expr_ *x);
-PyObject *NKI_Expr_topy(struct NKI_Expr *x);
-PyObject *NKI_Index_topy(struct NKI_Index *x);
-PyObject *NKI_Keyword_topy(struct NKI_Keyword *x);
-PyObject *NKI_Pattern_topy(struct NKI_Pattern *x);
-PyObject *NKI_Stmt__topy(struct NKI_Stmt_ *x);
-PyObject *NKI_Stmt_topy(struct NKI_Stmt *x);
-PyObject *NKI_Param_topy(struct NKI_Param *x);
-PyObject *NKI_Fun_topy(struct NKI_Fun *x);
-PyObject *NKI_Arg_topy(struct NKI_Arg *x);
-PyObject *NKI_Kernel_topy(struct NKI_Kernel *x);
-PyObject *NKI_Expr_List_topy(struct NKI_Expr_List *x);
-PyObject *NKI_Index_List_topy(struct NKI_Index_List *x);
-PyObject *NKI_Keyword_List_topy(struct NKI_Keyword_List *x);
-PyObject *NKI_Expr_Option_topy(struct NKI_Expr *x);
-PyObject *NKI_Pattern_List_topy(struct NKI_Pattern_List *x);
-PyObject *NKI_Stmt_List_topy(struct NKI_Stmt_List *x);
-PyObject *NKI_Param_List_topy(struct NKI_Param_List *x);
-PyObject *NKI_Fun_List_topy(struct NKI_Fun_List *x);
-PyObject *NKI_Arg_List_topy(struct NKI_Arg_List *x);
+PyObject* NKI_Value_topy(struct NKI_Value* x);
+PyObject* NKI_BinOp_topy(enum NKI_BinOp x);
+PyObject* NKI_Expr__topy(struct NKI_Expr_* x);
+PyObject* NKI_Expr_topy(struct NKI_Expr* x);
+PyObject* NKI_Index_topy(struct NKI_Index* x);
+PyObject* NKI_Keyword_topy(struct NKI_Keyword* x);
+PyObject* NKI_Pattern_topy(struct NKI_Pattern* x);
+PyObject* NKI_Stmt__topy(struct NKI_Stmt_* x);
+PyObject* NKI_Stmt_topy(struct NKI_Stmt* x);
+PyObject* NKI_Param_topy(struct NKI_Param* x);
+PyObject* NKI_Fun_topy(struct NKI_Fun* x);
+PyObject* NKI_Arg_topy(struct NKI_Arg* x);
+PyObject* NKI_Kernel_topy(struct NKI_Kernel* x);
+PyObject* NKI_Expr_List_topy(struct NKI_Expr_List* x);
+PyObject* NKI_Index_List_topy(struct NKI_Index_List* x);
+PyObject* NKI_Keyword_List_topy(struct NKI_Keyword_List* x);
+PyObject* NKI_Expr_Option_topy(struct NKI_Expr* x);
+PyObject* NKI_Pattern_List_topy(struct NKI_Pattern_List* x);
+PyObject* NKI_Stmt_List_topy(struct NKI_Stmt_List* x);
+PyObject* NKI_Param_List_topy(struct NKI_Param_List* x);
+PyObject* NKI_Fun_List_topy(struct NKI_Fun_List* x);
+PyObject* NKI_Arg_List_topy(struct NKI_Arg_List* x);
