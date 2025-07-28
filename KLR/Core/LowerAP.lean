@@ -60,7 +60,7 @@ def TensorRef.lowerAccessPatterns : TensorRef → KLR.Err TensorRef
 | x => do return x
 
 -- TODO: Is there a way to make this less horrible with metaprogramming? All argumetns are of different types.
-def Operator.lowerAccessPatterns (k : Operator) : KLR.Err Operator :=
+def NKIOperator.lowerAccessPatterns (k : NKIOperator) : KLR.Err NKIOperator :=
   match k with
   | .activate           op => do return .activate           { op with src := (← op.src.lowerAccessPatterns), dst := (← op.dst.lowerAccessPatterns), reduceRes := (<- op.reduceRes.mapM TensorRef.lowerAccessPatterns) }
   | .affineSelect       op => do return .affineSelect       { op with dst := (← op.dst.lowerAccessPatterns), onTrueTile := (<- op.onTrueTile.lowerAccessPatterns) }

@@ -141,12 +141,12 @@ inductive Term where
   | list     : List Term -> Term
   | ellipsis : Term
   | slice    : Option Int -> Option Int -> Option Int -> Term
-  | store    : Access -> Operator -> List Value -> Term
+  | store    : Access -> NKIOperator -> List Value -> Term
   | pointer  : Core.Address -> Term
   | expr     : Expr -> TermType -> Term
   | mgrid    : Term
   -- accepting a list of operators here might be lazy, but will suffice for now
-  | oper     : List Core.Operator -> Term
+  | oper     : List Core.NKIOperator -> Term
   deriving Repr, BEq
 
 instance : Inhabited Term where

@@ -15,7 +15,7 @@ limitations under the License.
 -/
 
 import KLR.Core.Tensor
-import KLR.Core.Operators
+import KLR.Core.NKIOperators
 import KLR.Serde.Attr
 import KLR.Serde.Elab
 import KLR.Util
@@ -85,8 +85,8 @@ inductive Expr where
 inductive Stmt where
   | ret (v : Value)
   | assign (x : String) (e : Expr)
-  | store (dst : Access) (op : Operator) (args : List Value)
-  | oper (op : Operator)
+  | store (dst : Access) (op : NKIOperator) (args : List Value)
+  | oper (op : NKIOperator)
   deriving BEq, FromCBOR, FromJson, FromSexp, Repr, ToCBOR, ToJson, ToSexp
 
 @[serde tag = 105]
@@ -141,7 +141,7 @@ instance [Tensors a] : Tensors (Option a) where
   | .some t => tensors t
   | .none => []
 
-instance : Tensors Operator where
+instance : Tensors NKIOperator where
   tensors op :=
     let transformed := match op with
       | .activate d => [d.dst, d.src]

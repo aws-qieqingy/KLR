@@ -407,22 +407,22 @@ nki reciprocal
  (mask : Option Immediate := none) := do
     if mask.isSome then throw maskNotSupported
     Trace.add_stmt $ .oper $ .reciprocal {
-      dst := .abstract dst
-      src := .abstract data
+      dst := .abstract dst,
+      src := .abstract data,
       dtype := dtype
     }
     return .none
 
 nki iota
  (dst: Access)
- (_expr : Int) -- TODO: Placeholder. Figure out this type
+ (expr : Int)
  --
  (dtype : Option Dtype := none)
  (mask : Option Immediate := none) := do
     if mask.isSome then throw maskNotSupported
     Trace.add_stmt $ .oper $ .iota {
-      dst := .abstract dst
-      pattern := ⟨ 0, [] ⟩  -- Fixme once we have conversion from expr to pattern
+      dst := .abstract dst,
+      pattern := ⟨ 0, []⟩
       dtype := dtype
     }
     return .none
@@ -448,7 +448,7 @@ nki dropout
 
 nki affine_select
  (dst: Access)
- (_pred : Int) -- TODO Placeholder. Figure out this type
+ (pred : Int)
  (on_true_tile : Access)
  (on_false_value : Immediate)
  -- kwargs
@@ -457,7 +457,7 @@ nki affine_select
     if mask.isSome then throw maskNotSupported
     Trace.add_stmt $ .oper $ .affineSelect {
       dst := .abstract dst,
-      fillMode := .Eq, -- TODO figure out how to get it from predicate
+      pred := ⟨ 0, [] ⟩,
       onTrueTile := .abstract on_true_tile,
       onFalseValue := on_false_value,
       dtype := dtype,
